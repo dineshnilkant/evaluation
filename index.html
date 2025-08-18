@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -341,7 +340,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="current-salary">Current Salary (â‚¹/month)</label>
+                        <label for="current-salary">Current Salary (Rupees in month)</label>
                         <input type="number" id="current-salary" min="0" placeholder="e.g., 75000">
                         <div class="note">Leave blank if fresher</div>
                     </div>
@@ -349,7 +348,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="expected-salary">Expected Salary (â‚¹/month)*</label>
+                        <label for="expected-salary">Expected Salary (Rupees in month)*</label>
                         <input type="number" id="expected-salary" min="0" placeholder="e.g., 90000" required>
                     </div>
                 </div>
@@ -537,7 +536,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="consult">Consultancy Revenue (â‚¹)</label>
+                        <label for="consult">Consultancy Revenue (In Rupees)</label>
                         <input type="number" id="consult" min="0" placeholder="e.g., 250000">
                     </div>
                 </div>
@@ -569,10 +568,10 @@
                 </div>
 
                 <div class="col-4">
-                    <div class="form-group">
-                        <label for="courses-taught">Courses Taught</label>
-                        <input type="number" id="courses-taught" min="0" placeholder="e.g., 5">
-                    </div>
+                   <div class="form-group">
+                       <label for="courses-taught">Courses Taught</label>
+                       <input type="number" id="courses-taught" min="0" placeholder="e.g., 5">
+                   </div>
                 </div>
 
                 <div class="col-4">
@@ -968,7 +967,7 @@
                 books: num("books"),
                 nationalConf: num("national-conf"),
                 internationalConf: num("international-conf"),
-                                patents: num("patents"),
+patents: num("patents"),
                 consult: num("consult"),
                 projects: num("projects"),
                 coursesTaught: num("courses-taught"),
@@ -979,32 +978,32 @@
             // Calculate score
             candidateData.score = calculateScore(candidateData);
 
-            // Display result
+            // Display initial recommendation
             const res = document.getElementById("initial");
             res.style.display = "block";
             res.className = "result " + classify(candidateData.score);
             
-            let resultText = `INITIAL EVALUATION: ${candidateData.name || "Candidate"}\n\n`;
-            resultText += `SCORE: ${candidateData.score}/100\n`;
-            resultText += `QUALIFICATION: ${classify(candidateData.score)}\n\n`;
+            let recommendation = `INITIAL RECOMMENDATION FOR ${candidateData.name || "Candidate"}\n\n`;
+            recommendation += `Position: ${candidateData.post}\n`;
+            recommendation += `Overall Score: ${candidateData.score}/100\n`;
+            recommendation += `Classification: ${classify(candidateData.score)}\n\n`;
             
             if (candidateData.score >= 90) {
-                resultText += "RECOMMENDATION: Strong candidate, recommend shortlisting\n";
-                resultText += "This candidate exceeds requirements with strong qualifications and research output.";
+                recommendation += "This candidate is highly qualified for the position. Strong research profile and teaching experience.\n";
+                recommendation += "Recommend proceeding with interview process.\n";
             } else if (candidateData.score >= 60) {
-                resultText += "RECOMMENDATION: Potential candidate, consider with mentorship\n";
-                resultText += "This candidate meets basic requirements but may need development in some areas.";
+                recommendation += "This candidate meets basic requirements but may need mentorship in some areas.\n";
+                recommendation += "Recommend interview with focus on their potential for growth.\n";
             } else {
-                resultText += "RECOMMENDATION: Does not meet minimum requirements\n";
-                resultText += "This candidate falls below expected standards for the position.";
+                recommendation += "This candidate does not currently meet our minimum requirements.\n";
+                recommendation += "Recommend considering other candidates unless there are exceptional circumstances.\n";
             }
             
-            res.textContent = resultText;
+            res.textContent = recommendation;
         });
 
-        // Final evaluation with interview scores
+        // Final evaluation (after interview)
         document.getElementById("btn-final").addEventListener("click", () => {
-            const initialScore = num("initial-score") || 0;
             const demoScore = num("demo");
             const interviewScore = num("interview");
             
@@ -1013,39 +1012,76 @@
                 return;
             }
             
-            // Calculate final score (initial 70%, demo 15%, interview 15%)
+            // Get initial score if available
+            const initialRes = document.getElementById("initial");
+            let initialScore = 70; // Default if not calculated
+            if (initialRes.textContent.includes("Overall Score")) {
+                const scoreMatch = initialRes.textContent.match(/Overall Score: (\d+)/);
+                if (scoreMatch) initialScore = parseInt(scoreMatch[1]);
+            }
+            
+            // Calculate final score (60% initial, 20% demo, 20% interview)
             const finalScore = Math.round(
-                initialScore * 0.7 + 
-                demoScore * 10 * 0.15 + 
-                interviewScore * 10 * 0.15
+                (initialScore * 0.6) + 
+                (demoScore * 4) + // Convert 1-10 scale to 0-20
+                (interviewScore * 4)
             );
             
+            // Display final recommendation
             const res = document.getElementById("final");
             res.style.display = "block";
             res.className = "result " + classify(finalScore);
             
-            let resultText = `FINAL EVALUATION\n\n`;
-            resultText += `SCORE: ${finalScore}/100\n`;
-            resultText += `DEMO CLASS: ${demoScore}/10\n`;
-            resultText += `INTERVIEW: ${interviewScore}/10\n\n`;
+            let recommendation = `FINAL RECOMMENDATION\n\n`;
+            recommendation += `Initial Score: ${initialScore}/100\n`;
+            recommendation += `Demo Class: ${demoScore}/10\n`;
+            recommendation += `Interview: ${interviewScore}/10\n`;
+            recommendation += `Final Score: ${finalScore}/100\n\n`;
             
             if (finalScore >= 90) {
-                resultText += "RECOMMENDATION: Strong hire\n";
-                resultText += "Candidate performed exceptionally well in all evaluation stages.";
-            } else if (finalScore >= 60) {
-                resultText += "RECOMMENDATION: Conditional hire\n";
-                resultText += "Candidate shows potential but may need additional support.";
+                recommendation += "STRONGLY RECOMMEND HIRE\n";
+                recommendation += "This candidate excelled in all evaluation stages. They would be a valuable addition to the faculty.\n";
+                recommendation += "Consider offering at the higher end of the salary range.\n";
+            } else if (finalScore >= 70) {
+                recommendation += "RECOMMEND HIRE WITH MENTORSHIP\n";
+                recommendation += "The candidate shows promise but may need support in some areas.\n";
+                recommendation += "Consider a probationary period with clear performance goals.\n";
+            } else if (finalScore >= 50) {
+                recommendation += "CONSIDER FOR JUNIOR POSITION\n";
+                recommendation += "The candidate may be better suited for a more junior role.\n";
+                recommendation += "Alternatively, consider for a visiting position first.\n";
             } else {
-                resultText += "RECOMMENDATION: Do not hire\n";
-                resultText += "Candidate did not meet the required standards.";
+                recommendation += "DO NOT RECOMMEND HIRE\n";
+                recommendation += "The candidate did not meet our standards in key areas.\n";
+                recommendation += "We recommend continuing the search for better candidates.\n";
             }
             
-            res.textContent = resultText;
+            // Add specific feedback
+            recommendation += "\nSPECIFIC FEEDBACK:\n";
+            if (demoScore < 6) {
+                recommendation += "- Needs improvement in teaching delivery and engagement\n";
+            } else if (demoScore > 8) {
+                recommendation += "- Excellent teaching skills demonstrated\n";
+            }
+            
+            if (interviewScore < 6) {
+                recommendation += "- Interview revealed gaps in knowledge/experience\n";
+            } else if (interviewScore > 8) {
+                recommendation += "- Impressive interview performance showing depth\n";
+            }
+            
+            res.textContent = recommendation;
         });
 
         // AI Analysis button
         document.getElementById("btn-ai").addEventListener("click", () => {
-            // Collect data again for comprehensive analysis
+            // Validate required fields
+            if (!txt("post") || !txt("ug")) {
+                alert("Please complete basic information first");
+                return;
+            }
+            
+            // Collect data
             const candidateData = {
                 name: txt("faculty-name"),
                 university: txt("current-university"),
@@ -1054,6 +1090,7 @@
                 exp: num("exp"),
                 currentSalary: num("current-salary"),
                 expectedSalary: num("expected-salary"),
+                salaryJustification: txt("salary-justification"),
                 preferredCity: txt("preferred-city"),
                 ug: txt("ug"),
                 pg: txt("pg"),
@@ -1078,32 +1115,34 @@
                 studentFeedback: num("student-feedback"),
                 teachingAwards: num("teaching-awards"),
                 score: calculateScore({
-                    // Need to recalculate score for AI analysis
+                    name: txt("faculty-name"),
+                    university: txt("current-university"),
+                    post: txt("post"),
+                    age: num("age"),
+                    exp: num("exp"),
+                    currentSalary: num("current-salary"),
+                    expectedSalary: num("expected-salary"),
+                    salaryJustification: txt("salary-justification"),
+                    preferredCity: txt("preferred-city"),
                     ug: txt("ug"),
                     pg: txt("pg"),
                     phd: txt("phd"),
+                    phdUniversity: txt("phd-university"),
+                    phdStatus: txt("phd-status"),
                     postdoc: txt("postdoc"),
                     other: txt("other"),
                     pub0: num("pub0"),
                     pub1: num("pub1"),
                     pub2: num("pub2"),
-                    patents: num("patents"),
-                    projects: num("projects"),
-                    consult: num("consult"),
                     scopusWos: num("scopus-wos"),
                     ugc: num("ugc"),
                     abdc: num("abdc"),
                     books: num("books"),
                     nationalConf: num("national-conf"),
                     internationalConf: num("international-conf"),
-                    university: txt("current-university"),
-                    phdUniversity: txt("phd-university"),
-                    currentSalary: num("current-salary"),
-                    expectedSalary: num("expected-salary"),
-                    post: txt("post"),
-                    exp: num("exp"),
-                    age: num("age"),
-                    phdStatus: txt("phd-status"),
+                    patents: num("patents"),
+                    consult: num("consult"),
+                    projects: num("projects"),
                     coursesTaught: num("courses-taught"),
                     studentFeedback: num("student-feedback"),
                     teachingAwards: num("teaching-awards")
@@ -1115,11 +1154,6 @@
 
         // Clear form button
         document.getElementById("btn-clear").addEventListener("click", clearForm);
-
-        // Initialize the form
-        document.addEventListener("DOMContentLoaded", () => {
-            // Any initialization code if needed
-        });
     </script>
 </body>
 </html>
