@@ -274,7 +274,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>First Draft AI Faculty Recruitment Evaluator</h1>
+            <h1>AI Faculty Recruitment Evaluator</h1>
+            <p class="subtitle">Evaluate faculty candidates based on qualifications, experience, and research output</p>
         </header>
 
         <div class="card">
@@ -657,8 +658,8 @@
         }
 
         function classify(score) {
-            if (score >= 90) return "A";
-            if (score >= 60) return "B";
+            if (score >= 80) return "A";
+            if (score >= 50) return "B";
             return "C";
         }
 
@@ -724,7 +725,7 @@
 
         // Realistic salary evaluation
         function evaluateSalary(current, expected, position, experience) {
-            // Position-based salary benchmarks (monthly in â‚¹)
+            // Position-based salary benchmarks (monthly in ₹)
             const benchmarks = {
                 "Assistant Professor": { min: 60000, avg: 85000, max: 120000 },
                 "Associate Professor": { min: 90000, avg: 120000, max: 180000 },
@@ -791,29 +792,29 @@
             // 1. Qualifications (35%)
             if (data.ug) score += 5;
             if (data.pg) score += 10;
-            if (data.phd) score += 25;
-            if (data.postdoc) score += 15;
+            if (data.phd) score += 20;  // Reduced from 25 to prevent overweighting
+            if (data.postdoc) score += 10;  // Reduced from 15
             if (data.other) score += 5;
             
             // 2. Research Output (30%)
-            const pubScore = Math.min(data.pub0 * 6 + data.pub1 * 4 + data.pub2 * 2, 50);
+            const pubScore = Math.min(data.pub0 * 4 + data.pub1 * 3 + data.pub2 * 2, 30);  // Reduced weights
             score += pubScore;
-            score += Math.min(data.patents * 5, 20);
-            score += Math.min(data.projects * 3, 15);
-            score += Math.min(Math.floor(data.consult / 100000), 10);
+            score += Math.min(data.patents * 3, 15);  // Reduced from 5 to 3
+            score += Math.min(data.projects * 2, 10);  // Reduced from 3 to 2
+            score += Math.min(Math.floor(data.consult / 100000), 5);  // Reduced from 10 to 5
             
             // Add scoring for new research metrics
-            score += Math.min(data.scopusWos * 3, 30);
-            score += Math.min(data.ugc * 2, 20);
-            score += Math.min(data.abdc * 4, 20);
-            score += Math.min(data.books * 5, 15);
+            score += Math.min(data.scopusWos * 2, 20);  // Reduced from 3 to 2
+            score += Math.min(data.ugc * 1, 10);  // Reduced from 2 to 1
+            score += Math.min(data.abdc * 2, 15);  // Reduced from 4 to 2
+            score += Math.min(data.books * 3, 10);  // Reduced from 5 to 3
             score += Math.min(data.nationalConf, 5);
-            score += Math.min(data.internationalConf * 2, 10);
+            score += Math.min(data.internationalConf, 5);  // Reduced from 2 to 1 per conf
             
             // 3. Teaching Experience (15%)
-            score += Math.min(data.coursesTaught * 2, 10);
-            score += Math.min(data.studentFeedback * 2, 10);
-            score += Math.min(data.teachingAwards * 5, 10);
+            score += Math.min(data.coursesTaught, 5);  // Reduced from 2 to 1 per course
+            score += Math.min(data.studentFeedback * 1, 10);  // Reduced from 2 to 1
+            score += Math.min(data.teachingAwards * 3, 10);  // Reduced from 5 to 3
             
             // 4. University Prestige (5%)
             score += evaluateUniversity(data.university);
@@ -837,7 +838,8 @@
             else if (data.phdStatus === "Thesis Submitted") score += 3;
             else if (data.phdStatus === "Proposal Submitted") score += 1;
             
-            return Math.round(score);
+            // Ensure score doesn't exceed 100
+            return Math.min(Math.round(score), 100);
         }
 
         // Generate AI analysis
@@ -910,8 +912,8 @@
             analysisText += "STRENGTHS:\n" + (strengths.length ? strengths.join("\n• ") : "No significant strengths identified") + "\n\n";
             analysisText += "AREAS FOR IMPROVEMENT:\n" + (weaknesses.length ? weaknesses.join("\n• ") : "No major concerns found") + "\n\n";
             analysisText += "RECOMMENDATION: " + 
-                (data.score >= 90 ? "Strongly Recommended" :
-                 data.score >= 60 ? "Recommended with Mentorship" :
+                (data.score >= 80 ? "Strongly Recommended" :
+                 data.score >= 50 ? "Recommended with Mentorship" :
                  "Not Recommended at This Time");
             
             analysis.className = "result " + classify(data.score);
@@ -967,7 +969,7 @@
                 books: num("books"),
                 nationalConf: num("national-conf"),
                 internationalConf: num("international-conf"),
-patents: num("patents"),
+                patents: num("patents"),
                 consult: num("consult"),
                 projects: num("projects"),
                 coursesTaught: num("courses-taught"),
@@ -985,18 +987,17 @@ patents: num("patents"),
             
             let recommendation = `INITIAL RECOMMENDATION FOR ${candidateData.name || "Candidate"}\n\n`;
             recommendation += `Position: ${candidateData.post}\n`;
-            recommendation += `Overall Score: ${candidateData.score}/100\n`;
             recommendation += `Classification: ${classify(candidateData.score)}\n\n`;
             
-            if (candidateData.score >= 90) {
-                recommendation += "This candidate is highly qualified for the position. Strong research profile and teaching experience.\n";
+            if (candidateData.score >= 80) {
+                recommendation += "This candidate is highly qualified for the position with strong credentials.\n";
                 recommendation += "Recommend proceeding with interview process.\n";
-            } else if (candidateData.score >= 60) {
-                recommendation += "This candidate meets basic requirements but may need mentorship in some areas.\n";
-                recommendation += "Recommend interview with focus on their potential for growth.\n";
+            } else if (candidateData.score >= 50) {
+                recommendation += "This candidate meets basic requirements but may need development in some areas.\n";
+                recommendation += "Recommend interview to assess potential fit.\n";
             } else {
                 recommendation += "This candidate does not currently meet our minimum requirements.\n";
-                recommendation += "Recommend considering other candidates unless there are exceptional circumstances.\n";
+                recommendation += "Recommend considering other candidates unless exceptional circumstances exist.\n";
             }
             
             res.textContent = recommendation;
@@ -1014,17 +1015,22 @@ patents: num("patents"),
             
             // Get initial score if available
             const initialRes = document.getElementById("initial");
-            let initialScore = 70; // Default if not calculated
-            if (initialRes.textContent.includes("Overall Score")) {
-                const scoreMatch = initialRes.textContent.match(/Overall Score: (\d+)/);
-                if (scoreMatch) initialScore = parseInt(scoreMatch[1]);
+            let initialScore = 50; // Default if not calculated
+            if (initialRes.textContent.includes("Classification")) {
+                // Extract classification to determine base score
+                const classMatch = initialRes.textContent.match(/Classification: ([ABC])/);
+                if (classMatch) {
+                    if (classMatch[1] === "A") initialScore = 80;
+                    else if (classMatch[1] === "B") initialScore = 65;
+                    else initialScore = 40;
+                }
             }
             
-            // Calculate final score (60% initial, 20% demo, 20% interview)
+            // Calculate final score (50% initial, 25% demo, 25% interview)
             const finalScore = Math.round(
-                (initialScore * 0.6) + 
-                (demoScore * 4) + // Convert 1-10 scale to 0-20
-                (interviewScore * 4)
+                (initialScore * 0.5) + 
+                (demoScore * 2.5) + // Convert 1-10 scale to 0-25
+                (interviewScore * 2.5)
             );
             
             // Display final recommendation
@@ -1033,41 +1039,37 @@ patents: num("patents"),
             res.className = "result " + classify(finalScore);
             
             let recommendation = `FINAL RECOMMENDATION\n\n`;
-            recommendation += `Initial Score: ${initialScore}/100\n`;
+            recommendation += `Initial Assessment: ${classify(initialScore)}\n`;
             recommendation += `Demo Class: ${demoScore}/10\n`;
             recommendation += `Interview: ${interviewScore}/10\n`;
-            recommendation += `Final Score: ${finalScore}/100\n\n`;
+            recommendation += `Final Classification: ${classify(finalScore)}\n\n`;
             
-            if (finalScore >= 90) {
+            if (finalScore >= 80) {
                 recommendation += "STRONGLY RECOMMEND HIRE\n";
-                recommendation += "This candidate excelled in all evaluation stages. They would be a valuable addition to the faculty.\n";
-                recommendation += "Consider offering at the higher end of the salary range.\n";
-            } else if (finalScore >= 70) {
-                recommendation += "RECOMMEND HIRE WITH MENTORSHIP\n";
-                recommendation += "The candidate shows promise but may need support in some areas.\n";
-                recommendation += "Consider a probationary period with clear performance goals.\n";
+                recommendation += "The candidate demonstrated excellence in both credentials and interview process.\n";
+                recommendation += "Offer competitive compensation based on market benchmarks.\n";
             } else if (finalScore >= 50) {
-                recommendation += "CONSIDER FOR JUNIOR POSITION\n";
-                recommendation += "The candidate may be better suited for a more junior role.\n";
-                recommendation += "Alternatively, consider for a visiting position first.\n";
+                recommendation += "CONDITIONAL RECOMMENDATION\n";
+                recommendation += "The candidate shows promise but may require additional support.\n";
+                recommendation += "Consider probationary period with clear performance metrics.\n";
             } else {
                 recommendation += "DO NOT RECOMMEND HIRE\n";
-                recommendation += "The candidate did not meet our standards in key areas.\n";
-                recommendation += "We recommend continuing the search for better candidates.\n";
+                recommendation += "The candidate did not meet expectations during evaluation.\n";
+                recommendation += "Continue search for better qualified candidates.\n";
             }
             
             // Add specific feedback
-            recommendation += "\nSPECIFIC FEEDBACK:\n";
+            recommendation += "\nPERFORMANCE FEEDBACK:\n";
             if (demoScore < 6) {
-                recommendation += "- Needs improvement in teaching delivery and engagement\n";
+                recommendation += "- Teaching delivery needs improvement (scored " + demoScore + "/10)\n";
             } else if (demoScore > 8) {
-                recommendation += "- Excellent teaching skills demonstrated\n";
+                recommendation += "- Excellent teaching demonstration (scored " + demoScore + "/10)\n";
             }
             
             if (interviewScore < 6) {
-                recommendation += "- Interview revealed gaps in knowledge/experience\n";
+                recommendation += "- Interview revealed gaps in knowledge/experience (scored " + interviewScore + "/10)\n";
             } else if (interviewScore > 8) {
-                recommendation += "- Impressive interview performance showing depth\n";
+                recommendation += "- Strong interview performance showing depth (scored " + interviewScore + "/10)\n";
             }
             
             res.textContent = recommendation;
