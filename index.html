@@ -101,7 +101,7 @@
             color: var(--text);
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #e2e8f0;
@@ -111,7 +111,7 @@
             transition: var(--transition);
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -131,6 +131,8 @@
             cursor: pointer;
             transition: var(--transition);
             font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .btn:hover {
@@ -140,6 +142,14 @@
 
         .btn:active {
             transform: translateY(0);
+        }
+
+        .btn-clear {
+            background-color: var(--danger);
+        }
+
+        .btn-clear:hover {
+            background-color: #dc2626;
         }
 
         .result {
@@ -203,6 +213,34 @@
             font-size: 0.875rem;
         }
 
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .file-upload input[type="file"] {
+            padding: 0.5rem;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+        }
+
+        .subjects-container {
+            margin-top: 1rem;
+        }
+
+        .subject-input {
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-links {
+            margin-top: 1rem;
+        }
+
+        .publication-link {
+            margin-bottom: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .col-6, .col-4, .col-3 {
                 grid-column: span 12;
@@ -229,6 +267,7 @@
             .btn {
                 width: 100%;
                 padding: 0.875rem;
+                margin-right: 0;
             }
         }
     </style>
@@ -237,7 +276,6 @@
     <div class="container">
         <header>
             <h1>First Draft AI Faculty Recruitment Evaluator</h1>
-            
         </header>
 
         <div class="card">
@@ -303,7 +341,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="current-salary">Current Salary (₹/month)</label>
+                        <label for="current-salary">Current Salary (â‚¹/month)</label>
                         <input type="number" id="current-salary" min="0" placeholder="e.g., 75000">
                         <div class="note">Leave blank if fresher</div>
                     </div>
@@ -311,7 +349,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="expected-salary">Expected Salary (₹/month)*</label>
+                        <label for="expected-salary">Expected Salary (â‚¹/month)*</label>
                         <input type="number" id="expected-salary" min="0" placeholder="e.g., 90000" required>
                     </div>
                 </div>
@@ -368,13 +406,11 @@
                         <label for="phd-status">Ph.D. Status (if pursuing)</label>
                         <select id="phd-status">
                             <option value="">Select status</option>
-                            <option>Waiting for Viva</option>
-                            <option>Thesis Submitted</option>
-                            <option>Research in Progress</option>
+                            <option>Completed</option>
                             <option>Coursework Completed</option>
-                            <option>Initial Synopsis Submitted</option>
-                            
-                            
+                            <option>Proposal Submitted</option>
+                            <option>Research in Progress</option>
+                            <option>Thesis Submitted</option>
                         </select>
                     </div>
                 </div>
@@ -391,6 +427,42 @@
                         <label for="other">Other Professional Certifications</label>
                         <input type="text" id="other" placeholder="e.g., AWS Certified">
                     </div>
+                </div>
+
+                <!-- Document Uploads -->
+                <div class="col-12">
+                    <div class="section-title">Document Uploads</div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group file-upload">
+                        <label for="ug-certificate">UG Marks Card/Certificate</label>
+                        <input type="file" id="ug-certificate" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group file-upload">
+                        <label for="pg-certificate">PG Marks Card/Certificate</label>
+                        <input type="file" id="pg-certificate" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group file-upload">
+                        <label for="phd-certificate">Ph.D. Certificate/Thesis</label>
+                        <input type="file" id="phd-certificate" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+
+                <!-- Subjects Taught -->
+                <div class="col-12">
+                    <div class="section-title">Subjects Taught</div>
+                    <div class="form-group">
+                        <label for="num-subjects">Number of Subjects Taught</label>
+                        <input type="number" id="num-subjects" min="0" placeholder="Enter number of subjects" onchange="generateSubjectFields()">
+                    </div>
+                    <div id="subjects-container" class="subjects-container"></div>
                 </div>
 
                 <!-- Research Output -->
@@ -417,6 +489,15 @@
                         <label for="pub2">Year Before Last Publications</label>
                         <input type="number" id="pub2" min="0" placeholder="e.g., 1">
                     </div>
+                </div>
+
+                <!-- Publication Links -->
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="num-publications">Number of Publications to Link</label>
+                        <input type="number" id="num-publications" min="0" placeholder="Enter number of publications" onchange="generatePublicationLinks()">
+                    </div>
+                    <div id="publication-links" class="publication-links"></div>
                 </div>
 
                 <div class="col-3">
@@ -456,7 +537,7 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="consult">Consultancy Revenue (₹)</label>
+                        <label for="consult">Consultancy Revenue (â‚¹)</label>
                         <input type="number" id="consult" min="0" placeholder="e.g., 250000">
                     </div>
                 </div>
@@ -512,6 +593,9 @@
                 <div class="col-12">
                     <button class="btn" id="btn-initial">
                         Generate Recommendation
+                    </button>
+                    <button class="btn btn-clear" id="btn-clear">
+                        Clear Form
                     </button>
                     <div id="initial" class="result"></div>
                 </div>
@@ -579,9 +663,69 @@
             return "C";
         }
 
+        // Generate subject fields based on user input
+        function generateSubjectFields() {
+            const numSubjects = parseInt(document.getElementById('num-subjects').value) || 0;
+            const container = document.getElementById('subjects-container');
+            container.innerHTML = '';
+
+            for (let i = 0; i < numSubjects; i++) {
+                const div = document.createElement('div');
+                div.className = 'subject-input';
+                div.innerHTML = `
+                    <label for="subject-${i}">Subject ${i + 1}</label>
+                    <input type="text" id="subject-${i}" placeholder="e.g., Machine Learning">
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        // Generate publication link fields
+        function generatePublicationLinks() {
+            const numPubs = parseInt(document.getElementById('num-publications').value) || 0;
+            const container = document.getElementById('publication-links');
+            container.innerHTML = '';
+
+            for (let i = 0; i < numPubs; i++) {
+                const div = document.createElement('div');
+                div.className = 'publication-link';
+                div.innerHTML = `
+                    <label for="pub-link-${i}">Publication ${i + 1} Link</label>
+                    <input type="url" id="pub-link-${i}" placeholder="https://example.com/publication">
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        // Clear form function
+        function clearForm() {
+            // Clear all input fields
+            document.querySelectorAll('input:not([type="button"]):not([type="submit"]), select, textarea').forEach(element => {
+                if (element.type === 'file') {
+                    // Files can't be cleared by setting value
+                } else {
+                    element.value = '';
+                }
+            });
+
+            // Clear dynamic fields
+            document.getElementById('subjects-container').innerHTML = '';
+            document.getElementById('publication-links').innerHTML = '';
+
+            // Hide all result displays
+            document.querySelectorAll('.result').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Hide all errors
+            document.querySelectorAll('.error').forEach(el => {
+                el.style.display = 'none';
+            });
+        }
+
         // Realistic salary evaluation
         function evaluateSalary(current, expected, position, experience) {
-            // Position-based salary benchmarks (monthly in ₹)
+            // Position-based salary benchmarks (monthly in â‚¹)
             const benchmarks = {
                 "Assistant Professor": { min: 60000, avg: 85000, max: 120000 },
                 "Associate Professor": { min: 90000, avg: 120000, max: 180000 },
@@ -824,7 +968,7 @@
                 books: num("books"),
                 nationalConf: num("national-conf"),
                 internationalConf: num("international-conf"),
-                patents: num("patents"),
+                                patents: num("patents"),
                 consult: num("consult"),
                 projects: num("projects"),
                 coursesTaught: num("courses-taught"),
@@ -835,55 +979,147 @@
             // Calculate score
             candidateData.score = calculateScore(candidateData);
 
-            // Display initial recommendation
-            const level = classify(candidateData.score);
+            // Display result
             const res = document.getElementById("initial");
             res.style.display = "block";
-            res.className = "result " + level;
-            res.textContent = `Initial Recommendation: ${candidateData.name || "Candidate"} - Level ${level}`;
-            res.dataset.candidateData = JSON.stringify(candidateData);
+            res.className = "result " + classify(candidateData.score);
+            
+            let resultText = `INITIAL EVALUATION: ${candidateData.name || "Candidate"}\n\n`;
+            resultText += `SCORE: ${candidateData.score}/100\n`;
+            resultText += `QUALIFICATION: ${classify(candidateData.score)}\n\n`;
+            
+            if (candidateData.score >= 90) {
+                resultText += "RECOMMENDATION: Strong candidate, recommend shortlisting\n";
+                resultText += "This candidate exceeds requirements with strong qualifications and research output.";
+            } else if (candidateData.score >= 60) {
+                resultText += "RECOMMENDATION: Potential candidate, consider with mentorship\n";
+                resultText += "This candidate meets basic requirements but may need development in some areas.";
+            } else {
+                resultText += "RECOMMENDATION: Does not meet minimum requirements\n";
+                resultText += "This candidate falls below expected standards for the position.";
+            }
+            
+            res.textContent = resultText;
         });
 
-        // Final evaluation
+        // Final evaluation with interview scores
         document.getElementById("btn-final").addEventListener("click", () => {
-            const demo = num("demo");
-            const interview = num("interview");
-
-            const initialText = document.getElementById("initial").textContent || "";
-            const match = initialText.match(/Level\s([ABC])/);
-            const initialLevel = match ? match[1] : "C";
-
-            // Weighted average (60% demo, 40% interview)
-            const performanceScore = demo * 0.6 + interview * 0.4;
-
-            let finalLevel = initialLevel;
-            if (performanceScore >= 8) {
-                finalLevel = "A"; // Excellent performance can boost
-            } else if (performanceScore >= 5) {
-                // Maintain or one level boost
-                if (initialLevel === "C") finalLevel = "B";
-            } else {
-                finalLevel = "C"; // Poor performance can downgrade
+            const initialScore = num("initial-score") || 0;
+            const demoScore = num("demo");
+            const interviewScore = num("interview");
+            
+            if (!demoScore || !interviewScore) {
+                alert("Please enter both demo class and interview ratings");
+                return;
             }
-
+            
+            // Calculate final score (initial 70%, demo 15%, interview 15%)
+            const finalScore = Math.round(
+                initialScore * 0.7 + 
+                demoScore * 10 * 0.15 + 
+                interviewScore * 10 * 0.15
+            );
+            
             const res = document.getElementById("final");
             res.style.display = "block";
-            res.className = "result " + finalLevel;
-            res.textContent = `Final Recommendation: Level ${finalLevel}\n(Demo: ${demo}/10, Interview: ${interview}/10)`;
+            res.className = "result " + classify(finalScore);
+            
+            let resultText = `FINAL EVALUATION\n\n`;
+            resultText += `SCORE: ${finalScore}/100\n`;
+            resultText += `DEMO CLASS: ${demoScore}/10\n`;
+            resultText += `INTERVIEW: ${interviewScore}/10\n\n`;
+            
+            if (finalScore >= 90) {
+                resultText += "RECOMMENDATION: Strong hire\n";
+                resultText += "Candidate performed exceptionally well in all evaluation stages.";
+            } else if (finalScore >= 60) {
+                resultText += "RECOMMENDATION: Conditional hire\n";
+                resultText += "Candidate shows potential but may need additional support.";
+            } else {
+                resultText += "RECOMMENDATION: Do not hire\n";
+                resultText += "Candidate did not meet the required standards.";
+            }
+            
+            res.textContent = resultText;
         });
 
         // AI Analysis button
-        document.getElementById("btn-ai").addEventListener("click", async () => {
-            const initialResult = document.getElementById("initial");
-            if (initialResult.style.display !== "block") {
-                alert("Please generate an initial recommendation first");
-                return;
-            }
+        document.getElementById("btn-ai").addEventListener("click", () => {
+            // Collect data again for comprehensive analysis
+            const candidateData = {
+                name: txt("faculty-name"),
+                university: txt("current-university"),
+                post: txt("post"),
+                age: num("age"),
+                exp: num("exp"),
+                currentSalary: num("current-salary"),
+                expectedSalary: num("expected-salary"),
+                preferredCity: txt("preferred-city"),
+                ug: txt("ug"),
+                pg: txt("pg"),
+                phd: txt("phd"),
+                phdUniversity: txt("phd-university"),
+                phdStatus: txt("phd-status"),
+                postdoc: txt("postdoc"),
+                other: txt("other"),
+                pub0: num("pub0"),
+                pub1: num("pub1"),
+                pub2: num("pub2"),
+                scopusWos: num("scopus-wos"),
+                ugc: num("ugc"),
+                abdc: num("abdc"),
+                books: num("books"),
+                nationalConf: num("national-conf"),
+                internationalConf: num("international-conf"),
+                patents: num("patents"),
+                consult: num("consult"),
+                projects: num("projects"),
+                coursesTaught: num("courses-taught"),
+                studentFeedback: num("student-feedback"),
+                teachingAwards: num("teaching-awards"),
+                score: calculateScore({
+                    // Need to recalculate score for AI analysis
+                    ug: txt("ug"),
+                    pg: txt("pg"),
+                    phd: txt("phd"),
+                    postdoc: txt("postdoc"),
+                    other: txt("other"),
+                    pub0: num("pub0"),
+                    pub1: num("pub1"),
+                    pub2: num("pub2"),
+                    patents: num("patents"),
+                    projects: num("projects"),
+                    consult: num("consult"),
+                    scopusWos: num("scopus-wos"),
+                    ugc: num("ugc"),
+                    abdc: num("abdc"),
+                    books: num("books"),
+                    nationalConf: num("national-conf"),
+                    internationalConf: num("international-conf"),
+                    university: txt("current-university"),
+                    phdUniversity: txt("phd-university"),
+                    currentSalary: num("current-salary"),
+                    expectedSalary: num("expected-salary"),
+                    post: txt("post"),
+                    exp: num("exp"),
+                    age: num("age"),
+                    phdStatus: txt("phd-status"),
+                    coursesTaught: num("courses-taught"),
+                    studentFeedback: num("student-feedback"),
+                    teachingAwards: num("teaching-awards")
+                })
+            };
+            
+            generateAIAnalysis(candidateData);
+        });
 
-            const candidateData = JSON.parse(initialResult.dataset.candidateData);
-            await generateAIAnalysis(candidateData);
+        // Clear form button
+        document.getElementById("btn-clear").addEventListener("click", clearForm);
+
+        // Initialize the form
+        document.addEventListener("DOMContentLoaded", () => {
+            // Any initialization code if needed
         });
     </script>
 </body>
-
 </html>
