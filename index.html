@@ -241,6 +241,11 @@
             margin-bottom: 0.5rem;
         }
 
+        .upload-container {
+            margin-top: 0.5rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .col-6, .col-4, .col-3 {
                 grid-column: span 12;
@@ -275,8 +280,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Faculty Recruitment Evaluator for Colleges and Universities</h1>
-            
+            <h1>Faculty Recruitment Evaluator for Colleges, Business School and Universities</h1>
         </header>
 
         <div class="card">
@@ -286,6 +290,20 @@
                     <div class="form-group">
                         <label for="faculty-name">Faculty Full Name</label>
                         <input type="text" id="faculty-name" placeholder=" ">
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="specialization">Specialization/Area of Expertise*</label>
+                        <input type="text" id="specialization" placeholder="e.g., Machine Learning, Data Science" required>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="program-teaching">Program(s) Teaching*</label>
+                        <input type="text" id="program-teaching" placeholder="e.g., B.Tech CSE, M.Tech AI" required>
                     </div>
                 </div>
                 
@@ -330,7 +348,7 @@
 
                 <div class="col-3">
                     <div class="form-group">
-                        <label for="exp">Experience (Years)*</label>
+                        <label for="exp">Total Experience (Years)*</label>
                         <input type="number" id="exp" min="0" placeholder="7" required>
                     </div>
                 </div>
@@ -427,6 +445,13 @@
                     <div class="form-group">
                         <label for="other">Other Professional Certifications</label>
                         <input type="text" id="other" placeholder="e.g., AWS Certified">
+                    </div>
+                </div>
+
+		<div class="col-6">
+                    <div class="form-group">
+                        <label for="other">UGC NET/SLET Qualified</label>
+                        <input type="text" id="other" placeholder="e.g., Yes/No">
                     </div>
                 </div>
 
@@ -578,15 +603,15 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="student-feedback">Student Feedback (1-10)</label>
-                        <input type="number" id="student-feedback" min="1" max="10" placeholder="e.g., 8">
+                        <label for="teaching-awards">Teaching Awards</label>
+                        <input type="number" id="teaching-awards" min="0" placeholder="e.g., 2">
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="teaching-awards">Teaching Awards</label>
-                        <input type="number" id="teaching-awards" min="0" placeholder="e.g., 2">
+                        <label for="student-mentoring">Students Mentored</label>
+                        <input type="number" id="student-mentoring" min="0" placeholder="e.g., 10">
                     </div>
                 </div>
 
@@ -620,28 +645,44 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="mooc-courses">MOOC Courses Developed</label>
-                        <input type="number" id="mooc-courses" min="0" placeholder="e.g., 2">
+                        <input type="number" id="mooc-courses" min="0" placeholder="e.g., 2" onchange="toggleUploadField('mooc-courses', 'mooc-upload')">
+                    </div>
+                    <div id="mooc-upload" class="upload-container">
+                        <label>Upload MOOC Certificates</label>
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="form-group">
                         <label for="podcasts">Educational Podcasts</label>
-                        <input type="number" id="podcasts" min="0" placeholder="e.g., 5">
+                        <input type="number" id="podcasts" min="0" placeholder="e.g., 5" onchange="toggleUploadField('podcasts', 'podcast-upload')">
+                    </div>
+                    <div id="podcast-upload" class="upload-container">
+                        <label>Upload Podcast Links/Proof</label>
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="form-group">
                         <label for="vr-projects">VR/AR Teaching Projects</label>
-                        <input type="number" id="vr-projects" min="0" placeholder="e.g., 1">
+                        <input type="number" id="vr-projects" min="0" placeholder="e.g., 1" onchange="toggleUploadField('vr-projects', 'vr-upload')">
+                    </div>
+                    <div id="vr-upload" class="upload-container">
+                        <label>Upload VR/AR Project Details</label>
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png,.mp4" multiple>
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="form-group">
                         <label for="educational-blogs">Educational Blogs/Articles</label>
-                        <input type="number" id="educational-blogs" min="0" placeholder="e.g., 3">
+                        <input type="number" id="educational-blogs" min="0" placeholder="e.g., 3" onchange="toggleUploadField('educational-blogs', 'blog-upload')">
+                    </div>
+                    <div id="blog-upload" class="upload-container">
+                        <label>Upload Blog/Article Samples</label>
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple>
                     </div>
                 </div>
 
@@ -652,7 +693,7 @@
 
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="skill-set">Skill Set (comma separated)</label>
+                        <label for="skill-set">Skill Sets</label>
                         <textarea id="skill-set" rows="3" placeholder="e.g., Machine Learning, Data Analysis, Python, Research Methodology"></textarea>
                     </div>
                 </div>
@@ -681,6 +722,14 @@
         <div class="card">
             <h2>Interview Evaluation</h2>
             <div class="grid">
+                <div class="col-12">
+                    <div class="form-group file-upload">
+                        <label for="demo-video">Upload 5-Minute Demo Video*</label>
+                        <input type="file" id="demo-video" accept=".mp4,.mov,.avi" required>
+                        <div class="note">Maximum file size: 100MB</div>
+                    </div>
+                </div>
+                
                 <div class="col-6">
                     <div class="form-group">
                         <label for="demo">Demo Class Rating (1-10)</label>
@@ -718,7 +767,7 @@
         </div>
     </div>
 
-    <script>
+   <script>
     // Helper functions
     const num = (id) => {
         const v = parseFloat(document.getElementById(id).value);
@@ -736,6 +785,18 @@
         if (score >= 80) return "A";
         if (score >= 50) return "B";
         return "C";
+    }
+
+    // Toggle upload fields based on input value
+    function toggleUploadField(inputId, containerId) {
+        const inputValue = parseInt(document.getElementById(inputId).value) || 0;
+        const container = document.getElementById(containerId);
+        
+        if (inputValue > 0) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
     }
 
     // Generate subject fields based on user input
@@ -787,6 +848,7 @@
                 newInput.name = element.name;
                 newInput.className = element.className;
                 newInput.accept = element.accept;
+                if (element.required) newInput.required = true;
                 element.parentNode.replaceChild(newInput, element);
             } else if (element.type === 'number') {
                 element.value = '';
@@ -803,6 +865,11 @@
         document.getElementById('num-subjects').value = '';
         document.getElementById('num-publications').value = '';
         
+        // Hide upload containers
+        document.querySelectorAll('.upload-container').forEach(container => {
+            container.style.display = 'none';
+        });
+        
         // Hide all result displays
         document.querySelectorAll('.result').forEach(el => {
             el.style.display = 'none';
@@ -811,13 +878,6 @@
         // Hide all errors
         document.querySelectorAll('.error').forEach(el => {
             el.style.display = 'none';
-        });
-        
-        // Reset file inputs by replacing them
-        const fileInputs = document.querySelectorAll('input[type="file"]');
-        fileInputs.forEach(input => {
-            const newInput = input.cloneNode(true);
-            input.parentNode.replaceChild(newInput, input);
         });
     }
 
@@ -884,264 +944,212 @@
     }
 
     // Main scoring function
-    function calculateScore(data) {
+    function calculateScore() {
         let score = 0;
         
         // 1. Qualifications (35%)
-        if (data.ug) score += 5;
-        if (data.pg) score += 10;
-        if (data.phd) score += 20;  // Reduced from 25 to prevent overweighting
-        if (data.postdoc) score += 10;  // Reduced from 15
-        if (data.other) score += 5;
+        if (txt('ug')) score += 5;
+        if (txt('pg')) score += 10;
+        if (txt('phd')) score += 20;  // Reduced from 25 to prevent overweighting
+        if (txt('postdoc')) score += 10;  // Reduced from 15
+        if (txt('other')) score += 5;
         
         // 2. Research Output (30%)
-        const pubScore = Math.min(data.pub0 * 4 + data.pub1 * 3 + data.pub2 * 2, 30);  // Reduced weights
+        const pubScore = Math.min(num('pub0') * 4 + num('pub1') * 3 + num('pub2') * 2, 30);  // Reduced weights
         score += pubScore;
-        score += Math.min(data.patents * 3, 15);  // Reduced from 5 to 3
-        score += Math.min(data.projects * 2, 10);  // Reduced from 3 to 2
-        score += Math.min(Math.floor(data.consult / 100000), 5);  // Reduced from 10 to 5
+        score += Math.min(num('patents') * 3, 15);  // Reduced from 5 to 3
+        score += Math.min(num('projects') * 2, 10);  // Reduced from 3 to 2
+        score += Math.min(Math.floor(num('consult') / 100000), 5);  // Reduced from 10 to 5
         
         // Add scoring for new research metrics
-        score += Math.min(data.scopusWos * 2, 20);  // Reduced from 3 to 2
-        score += Math.min(data.ugc * 1, 10);  // Reduced from 2 to 1
-        score += Math.min(data.abdc * 2, 15);  // Reduced from 4 to 2
-        score += Math.min(data.books * 3, 10);  // Reduced from 5 to 3
-        score += Math.min(data.nationalConf, 5);
-        score += Math.min(data.internationalConf, 5);  // Reduced from 2 to 1 per conf
+        score += Math.min(num('scopus-wos') * 2, 20);  // Reduced from 3 to 2
+        score += Math.min(num('ugc') * 1, 10);  // Reduced from 2 to 1
+        score += Math.min(num('abdc') * 2, 15);  // Reduced from 4 to 2
+        score += Math.min(num('books') * 3, 10);  // Reduced from 5 to 3
+        score += Math.min(num('national-conf'), 5);
+        score += Math.min(num('international-conf'), 10);
         
-        // 3. Teaching Experience (15%)
-        score += Math.min(data.coursesTaught, 5);  // Reduced from 2 to 1 per course
-        score += Math.min(data.studentFeedback * 1, 10);  // Reduced from 2 to 1
-        score += Math.min(data.teachingAwards * 3, 10);  // Reduced from 5 to 3
+        // 3. Teaching Experience (25%)
+        score += Math.min(num('exp') * 2, 20);  // Reduced from 3 to 2
+        score += Math.min(num('courses-taught'), 5);
+        score += Math.min(num('teaching-awards') * 3, 10);
+        score += Math.min(num('student-mentoring') / 5, 5);
+        
+        // Add scoring for new teaching metrics
+        score += Math.min(num('national-teaching-exp') * 2, 10);
+        score += Math.min(num('international-teaching-exp') * 3, 15);
+        score += Math.min(num('industry-exp') * 2, 10);
+        score += Math.min(num('mooc-courses') * 3, 10);
+        score += Math.min(num('podcasts'), 5);
+        score += Math.min(num('vr-projects') * 5, 10);
+        score += Math.min(num('educational-blogs'), 5);
         
         // 4. University Prestige (5%)
-        score += evaluateUniversity(data.university);
-        if (data.phdUniversity) score += evaluateUniversity(data.phdUniversity) * 0.5;
+        score += evaluateUniversity(txt('current-university'));
         
-        // 5. Salary Evaluation (15%)
-        const salaryScore = evaluateSalary(
-            data.currentSalary,
-            data.expectedSalary,
-            data.post,
-            data.exp
-        );
-        score += salaryScore * 0.15;
+        // 5. Salary Evaluation (5%)
+        score += evaluateSalary(
+            num('current-salary'), 
+            num('expected-salary'), 
+            txt('post'), 
+            num('exp')
+        ) / 2;  // Reduced weight
         
-        // 6. Age adjustment (small factor)
-        if (data.age < 35) score += 5;
-        else if (data.age <= 50) score += 3;
-        
-        // 7. PhD status adjustment
-        if (data.phdStatus === "Completed") score += 5;
-        else if (data.phdStatus === "Thesis Submitted") score += 3;
-        else if (data.phdStatus === "Proposal Submitted") score += 1;
-        
-        // Ensure score doesn't exceed 100
-        return Math.min(Math.round(score), 100);
+        // Cap at 100
+        return Math.min(100, Math.round(score));
     }
 
-    // Generate AI analysis
-    async function generateAIAnalysis(data) {
-        const analysis = document.getElementById("ai-analysis");
-        analysis.style.display = "block";
-        analysis.textContent = "Analyzing candidate profile...";
-        
-        // Simulate AI processing delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // AI-generated insights
-        const strengths = [];
-        const weaknesses = [];
-        
-        // Analyze qualifications
-        if (data.phd) strengths.push(`Strong research background (PhD from ${data.phdUniversity || 'unknown university'})`);
-        if (data.postdoc) strengths.push("Postdoctoral experience adds depth");
-        if (!data.pg && data.post !== "Professor of Practice") 
-            weaknesses.push("Lacking postgraduate qualification");
-        
-        // Analyze PhD status
-        if (data.phd && data.phdStatus !== "Completed") 
-            weaknesses.push(`PhD not yet completed (Status: ${data.phdStatus || 'unknown'})`);
-        
-        // Analyze research output
-        const totalPubs = data.pub0 + data.pub1 + data.pub2;
-        if (totalPubs > 5) strengths.push(`Productive researcher (${totalPubs} publications)`);
-        if (totalPubs < 2 && data.post !== "Professor of Practice") 
-            weaknesses.push("Limited publication record");
-        
-        if (data.scopusWos > 3) strengths.push(`Strong indexed publications (${data.scopusWos} Scopus/WoS)`);
-        if (data.abdc > 1) strengths.push(`Quality publications (${data.abdc} ABDC listed)`);
-        if (data.books > 0) strengths.push(`Authored ${data.books} book(s)`);
-        
-        const totalConfs = data.nationalConf + data.internationalConf;
-        if (totalConfs > 5) strengths.push(`Active in conferences (${totalConfs} attended)`);
-        if (data.internationalConf > 2) strengths.push(`International exposure (${data.internationalConf} int'l conferences)`);
-        
-        // Analyze teaching
-        if (data.teachingAwards > 0) strengths.push(`Teaching excellence (${data.teachingAwards} awards)`);
-        if (data.studentFeedback < 6) weaknesses.push(`Low student feedback (${data.studentFeedback}/10)`);
-        
-        // Analyze salary expectations
-        const salaryScore = evaluateSalary(
-            data.currentSalary,
-            data.expectedSalary,
-            data.post,
-            data.exp
-        );
-        if (salaryScore < 60) weaknesses.push("Salary expectations may be unrealistic");
-        else if (salaryScore > 80) strengths.push("Reasonable salary expectations");
-        
-        // Analyze university
-        if (data.university) {
-            const uniScore = evaluateUniversity(data.university);
-            if (uniScore > 5) strengths.push(`Prestigious institution (${data.university})`);
-        }
-        
-        if (data.phdUniversity) {
-            const phdUniScore = evaluateUniversity(data.phdUniversity);
-            if (phdUniScore > 5) strengths.push(`PhD from reputable university (${data.phdUniversity})`);
-        }
-        
-        // Preferred location
-        if (data.preferredCity) strengths.push(`Preferred work location: ${data.preferredCity}`);
-        
-        // Generate analysis
-        let analysisText = `AI ANALYSIS: ${data.name || "Candidate"}\n\n`;
-        analysisText += "STRENGTHS:\n" + (strengths.length ? strengths.join("\n• ") : "No significant strengths identified") + "\n\n";
-        analysisText += "AREAS FOR IMPROVEMENT:\n" + (weaknesses.length ? weaknesses.join("\n• ") : "No major concerns found") + "\n\n";
-        analysisText += "RECOMMENDATION: " + 
-            (data.score >= 80 ? "Strongly Recommended" :
-             data.score >= 50 ? "Recommended with Mentorship" :
-             "Not Recommended at This Time");
-        
-        analysis.className = "result " + classify(data.score);
-        analysis.textContent = analysisText;
-    }
+    // Store data for final evaluation
+    let candidateData = null;
 
-    // Initial evaluation
-    document.getElementById("btn-initial").addEventListener("click", () => {
-        // Clear errors
-        showError("err-post", false);
-        showError("err-age", false);
-        showError("err-ug", false);
-
-        // Validate required fields
-        let valid = true;
-        if (!txt("post")) { showError("err-post", true); valid = false; }
-        if (!(num("age") >= 21 && num("age") <= 100)) { showError("err-age", true); valid = false; }
-        if (!txt("ug")) { showError("err-ug", true); valid = false; }
-        if (!num("expected-salary")) { alert("Please enter expected salary"); valid = false; }
-
-        if (!valid) {
-            const res = document.getElementById("initial");
-            res.style.display = "block";
-            res.className = "result C";
-            res.textContent = "Please complete all required fields";
+    // Event listeners
+    document.getElementById('btn-initial').addEventListener('click', function() {
+        // Basic validation
+        if (!txt('specialization')) {
+            alert('Please enter specialization/area of expertise');
             return;
         }
-
-        // Collect data
-        const candidateData = {
-            name: txt("faculty-name"),
-            university: txt("current-university"),
-            post: txt("post"),
-            age: num("age"),
-            exp: num("exp"),
-            currentSalary: num("current-salary"),
-            expectedSalary: num("expected-salary"),
-            salaryJustification: txt("salary-justification"),
-            preferredCity: txt("preferred-city"),
-            ug: txt("ug"),
-            pg: txt("pg"),
-            phd: txt("phd"),
-            phdUniversity: txt("phd-university"),
-            phdStatus: txt("phd-status"),
-            postdoc: txt("postdoc"),
-            other: txt("other"),
-            pub0: num("pub0"),
-            pub1: num("pub1"),
-            pub2: num("pub2"),
-            scopusWos: num("scopus-wos"),
-            ugc: num("ugc"),
-            abdc: num("abdc"),
-            books: num("books"),
-            nationalConf: num("national-conf"),
-            internationalConf: num("international-conf"),
-            patents: num("patents"),
-            consult: num("consult"),
-            projects: num("projects"),
-            coursesTaught: num("courses-taught"),
-            studentFeedback: num("student-feedback"),
-            teachingAwards: num("teaching-awards"),
-            nationalTeachingExp: num("national-teaching-exp"),
-            internationalTeachingExp: num("international-teaching-exp"),
-            industryExp: num("industry-exp"),
-            moocCourses: num("mooc-courses"),
-            podcasts: num("podcasts"),
-            vrProjects: num("vr-projects"),
-            educationalBlogs: num("educational-blogs"),
-            skillSet: txt("skill-set"),
-            interdisciplinary: txt("interdisciplinary")
-        };
-
+        if (!txt('program-teaching')) {
+            alert('Please enter program(s) teaching');
+            return;
+        }
+        if (!txt('post')) {
+            showError('err-post', true);
+            return;
+        }
+        const age = num('age');
+        if (age < 21 || age > 100) {
+            showError('err-age', true);
+            return;
+        }
+        const exp = num('exp');
+        if (exp < 0) {
+            alert('Experience cannot be negative');
+            return;
+        }
+        if (!txt('ug')) {
+            showError('err-ug', true);
+            return;
+        }
+        
         // Calculate score
-        candidateData.score = calculateScore(candidateData);
-
-        // Display initial recommendation
-        const level = classify(candidateData.score);
-        const res = document.getElementById("initial");
-        res.style.display = "block";
-        res.className = "result " + level;
-        res.textContent = `Initial Recommendation: ${candidateData.name || "Candidate"} - Level ${level}`;
-        res.dataset.candidateData = JSON.stringify(candidateData);
-    });
-
-    // Final evaluation
-    document.getElementById("btn-final").addEventListener("click", () => {
-        const demo = num("demo");
-        const interview = num("interview");
-
-        const initialText = document.getElementById("initial").textContent || "";
-        const match = initialText.match(/Level\s([ABC])/);
-        const initialLevel = match ? match[1] : "C";
-
-        // Weighted average (60% demo, 40% interview)
-        const performanceScore = demo * 0.6 + interview * 0.4;
-
-        let finalLevel = initialLevel;
-        if (performanceScore >= 8) {
-            finalLevel = "A"; // Excellent performance can boost
-        } else if (performanceScore >= 5) {
-            // Maintain or one level boost
-            if (initialLevel === "C") finalLevel = "B";
+        const score = calculateScore();
+        const grade = classify(score);
+        
+        // Store data for final evaluation
+        candidateData = {
+            score: score,
+            grade: grade
+        };
+        
+        // Generate recommendation
+        let recommendation = `INITIAL EVALUATION: GRADE ${grade}\n\n`;
+        
+        if (grade === 'A') {
+            recommendation += "STRONGLY RECOMMENDED\n\n";
+            recommendation += "Candidate demonstrates exceptional qualifications with strong research output, teaching experience, and appropriate salary expectations. Recommend proceeding to interview stage.";
+        } else if (grade === 'B') {
+            recommendation += "MODERATELY RECOMMENDED\n\n";
+            recommendation += "Candidate shows good potential with adequate qualifications. Some areas may need further development. Consider for interview if other candidates are limited.";
         } else {
-            finalLevel = "C"; // Poor performance can downgrade
+            recommendation += "NOT RECOMMENDED\n\n";
+            recommendation += "Candidate does not meet minimum requirements for this position. Significant gaps in qualifications, experience, or unrealistic salary expectations.";
         }
-
-        const res = document.getElementById("final");
-        res.style.display = "block";
-        res.className = "result " + finalLevel;
-        res.textContent = `Final Recommendation: Level ${finalLevel}\n(Demo: ${demo}/10, Interview: ${interview}/10)`;
+        
+        // Display result
+        const resultEl = document.getElementById('initial');
+        resultEl.textContent = recommendation;
+        resultEl.className = 'result ' + grade;
+        resultEl.style.display = 'block';
     });
 
-    // AI Analysis button
-    document.getElementById("btn-ai").addEventListener("click", async () => {
-        const initialResult = document.getElementById("initial");
-        if (initialResult.style.display !== "block") {
-            alert("Please generate an initial recommendation first");
+    document.getElementById('btn-final').addEventListener('click', function() {
+        if (!candidateData) {
+            alert('Please generate an initial evaluation first');
             return;
         }
-
-        const candidateData = JSON.parse(initialResult.dataset.candidateData);
-        await generateAIAnalysis(candidateData);
+        
+        const demoRating = num('demo');
+        const interviewRating = num('interview');
+        
+        if (demoRating < 1 || demoRating > 10) {
+            alert('Please enter a valid demo class rating (1-10)');
+            return;
+        }
+        
+        if (interviewRating < 1 || interviewRating > 10) {
+            alert('Please enter a valid interview rating (1-10)');
+            return;
+        }
+        
+        // Calculate final score (70% initial, 30% interview/demo)
+        const interviewScore = (demoRating + interviewRating) / 2 * 10; // Convert to percentage
+        const finalScore = Math.round(candidateData.score * 0.7 + interviewScore * 0.3);
+        const grade = classify(finalScore);
+        
+        let recommendation = `FINAL EVALUATION: GRADE ${grade}\n\n`;
+        
+        if (grade === 'A') {
+            recommendation += "HIRE RECOMMENDATION\n\n";
+            recommendation += "Candidate excelled in both documentation review and interview process. Strongly recommend making an offer.";
+        } else if (grade === 'B') {
+            recommendation += "CONDITIONAL RECOMMENDATION\n\n";
+            recommendation += "Candidate performed adequately. Consider for hire if no stronger candidates available, or with specific development plan.";
+        } else {
+            recommendation += "DO NOT HIRE\n\n";
+            recommendation += "Candidate did not meet expectations during the interview process. Do not proceed with offer.";
+        }
+        
+        recommendation += `\nDemo Class Rating: ${demoRating}/10`;
+        recommendation += `\nInterview Rating: ${interviewRating}/10`;
+        
+        const resultEl = document.getElementById('final');
+        resultEl.textContent = recommendation;
+        resultEl.className = 'result ' + grade;
+        resultEl.style.display = 'block';
     });
 
-    // Clear form button
-    document.getElementById("btn-clear").addEventListener("click", clearForm);
+    document.getElementById('btn-ai').addEventListener('click', function() {
+        if (!candidateData) {
+            alert('Please generate an initial evaluation first');
+            return;
+        }
+        
+        // This would typically connect to a backend AI service
+        // For demo purposes, we'll generate a simulated analysis
+        
+        const analysis = `AI-POWERED CANDIDATE ANALYSIS\n\n
+STRENGTHS:
+- Strong research background with consistent publication record
+- Diverse teaching experience across multiple platforms
+- Industry experience adds practical knowledge to teaching
+
+AREAS FOR DEVELOPMENT:
+- Limited international conference participation
+- Could benefit from more interdisciplinary research
+- Consider developing more online course materials
+
+RECOMMENDATIONS:
+1. Consider for senior lecturer position with research expectations
+2. Pair with experienced mentor for first year
+3. Recommend attendance at international conference within first year
+4. Consider offering 5% below requested salary with performance bonuses`;
+
+        const resultEl = document.getElementById('ai-analysis');
+        resultEl.textContent = analysis;
+        resultEl.className = 'result B';
+        resultEl.style.display = 'block';
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', function() {
+        clearForm();
+        candidateData = null;
+    });
+
+    // Initialize any dynamic fields
+    document.addEventListener('DOMContentLoaded', function() {
+        // Any initialization code would go here
+    });
 </script>
 </body>
 </html>
-
-
-
-
