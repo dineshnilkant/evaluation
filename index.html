@@ -246,6 +246,23 @@
             display: none;
         }
 
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .col-6, .col-4, .col-3 {
                 grid-column: span 12;
@@ -288,11 +305,24 @@
                 <!-- Personal Information -->
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="faculty-name">Faculty Full Name</label>
-                        <input type="text" id="faculty-name" placeholder=" ">
+                        <label for="faculty-name">Faculty Full Name*</label>
+                        <input type="text" id="faculty-name" placeholder="e.g., Dr. Rajesh Kumar" required>
                     </div>
                 </div>
                 
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="gender">Gender*</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                            <option>Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-6">
                     <div class="form-group">
                         <label for="specialization">Specialization/Area of Expertise*</label>
@@ -312,6 +342,20 @@
                         <label for="current-university">Current University/Institution and Location</label>
                         <input type="text" id="current-university" placeholder="e.g., IIM Bangalore">
                         <div class="note">Leave blank if fresher</div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="medium-instruction">Medium of Instruction*</label>
+                        <select id="medium-instruction" required>
+                            <option value="">Select Medium</option>
+                            <option>English</option>
+                            <option>Hindi</option>
+                            <option>Regional Language</option>
+                            <option>Bilingual (English + Regional)</option>
+                            <option>Other</option>
+                        </select>
                     </div>
                 </div>
 
@@ -448,10 +492,14 @@
                     </div>
                 </div>
 
-		<div class="col-6">
+                <div class="col-6">
                     <div class="form-group">
-                        <label for="other">UGC NET/SLET Qualified</label>
-                        <input type="text" id="other" placeholder="e.g., Yes/No">
+                        <label for="ugc-net">UGC NET/SLET Qualified</label>
+                        <select id="ugc-net">
+                            <option value="">Select</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
                     </div>
                 </div>
 
@@ -594,8 +642,7 @@
                     <div class="section-title">Teaching Experience</div>
                 </div>
 
-                
-<div class="col-4">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="national-teaching-exp">National Teaching Experience (Years)</label>
                         <input type="number" id="national-teaching-exp" min="0" placeholder="e.g., 5">
@@ -616,7 +663,7 @@
                     </div>
                 </div>
 
-				<div class="col-4">
+                <div class="col-4">
                    <div class="form-group">
                        <label for="courses-taught">Online Courses Taught</label>
                        <input type="number" id="courses-taught" min="0" placeholder="e.g., 5">
@@ -636,9 +683,6 @@
                         <input type="number" id="student-mentoring" min="0" placeholder="e.g., 10">
                     </div>
                 </div>
-
-                <!-- NEW: Additional Teaching Experience Fields -->
-                
 
                 <!-- NEW: Digital Teaching Portfolio -->
                 <div class="col-12">
@@ -686,6 +730,64 @@
                     <div id="blog-upload" class="upload-container">
                         <label>Upload Blog/Article Samples</label>
                         <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple>
+                    </div>
+                </div>
+
+                <!-- NEW: Academic Administration -->
+                <div class="col-12">
+                    <div class="section-title">Academic Administration Experience</div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Experience with Accreditation Processes</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="nep" value="NEP">
+                                <label for="nep">NEP Implementation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="naac" value="NAAC">
+                                <label for="naac">NAAC Accreditation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="nba" value="NBA">
+                                <label for="nba">NBA Accreditation</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="admin-roles">Administrative Roles Held</label>
+                        <textarea id="admin-roles" rows="3" placeholder="e.g., Department Head, Program Coordinator, Admission Committee Member"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="curriculum-dev">Curriculum Development Experience</label>
+                        <textarea id="curriculum-dev" rows="3" placeholder="e.g., Developed new courses, Revised curriculum for accreditation"></textarea>
+                    </div>
+                </div>
+
+                <!-- NEW: Extra-Curricular Activities -->
+                <div class="col-12">
+                    <div class="section-title">Extra-Curricular Activities</div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="extra-curricular">Student Activities & Mentoring</label>
+                        <textarea id="extra-curricular" rows="3" placeholder="e.g., Faculty advisor for student clubs, Organized technical festivals, Mentored student projects"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="community-service">Community Service & Outreach</label>
+                        <textarea id="community-service" rows="3" placeholder="e.g., Industry workshops, Community education programs, Professional development activities"></textarea>
                     </div>
                 </div>
 
@@ -770,8 +872,9 @@
         </div>
     </div>
 
-   <script>
-    // Helper functions
+   
+    <script>
+    // Previous helper functions remain the same
     const num = (id) => {
         const v = parseFloat(document.getElementById(id).value);
         return Number.isFinite(v) ? v : 0;
@@ -855,6 +958,8 @@
                 element.parentNode.replaceChild(newInput, element);
             } else if (element.type === 'number') {
                 element.value = '';
+            } else if (element.type === 'checkbox') {
+                element.checked = false;
             } else {
                 element.value = '';
             }
@@ -892,271 +997,343 @@
             "Associate Professor": { min: 90000, avg: 120000, max: 180000 },
             "Professor": { min: 120000, avg: 160000, max: 250000 },
             "Professor of Practice": { min: 100000, avg: 150000, max: 300000 },
-            "Visiting Faculty": { min: 50000, avg: 80000, max: 150000 },
-            "default": { min: 50000, avg: 75000, max: 150000 }
+            "Visiting Faculty": { min: 80000, avg: 120000, max: 200000 }
         };
-        
-        const range = benchmarks[position] || benchmarks.default;
-        
-        // Calculate salary score (0-100)
-        let score = 0;
-        
-        // 1. Check if within reasonable range
-        if (expected >= range.min && expected <= range.max) {
-            score = 80; // Base score for being in range
-            
-            // 2. Compare to current salary (if available)
-            if (current > 0) {
-                const increase = ((expected - current) / current) * 100;
-                if (increase <= 30) score += 10; // Reasonable increase
-                else if (increase <= 50) score += 5; // Moderate increase
-                else score -= 10; // Large increase
-            }
-            
-            // 3. Experience adjustment
-            if (experience >= 5) score += 5;
-            else if (experience <= 2) score -= 5;
-        } 
-        else if (expected < range.min) {
-            score = 60 + (expected/range.min * 20); // 60-80 for below range
-        } 
-        else {
-            score = 80 - ((expected - range.max)/range.max * 30); // Penalize for above range
-        }
-        
-        return Math.max(0, Math.min(100, Math.round(score)));
-    }
 
-    // University prestige scoring
-    function evaluateUniversity(universityName) {
-        if (!universityName) return 0;
+        const positionBenchmark = benchmarks[position] || benchmarks["Assistant Professor"];
         
-        // Tier 1 institutions (global top 100 or national top 10)
-        const tier1 = ["harvard", "stanford", "mit", "oxford", "cambridge", 
-                      "iit", "iisc", "iim", "princeton", "caltech"];
+        // Experience multiplier (1% increase per year of experience)
+        const expMultiplier = 1 + (experience * 0.01);
         
-        // Tier 2 institutions (well-recognized national/regional)
-        const tier2 = ["duke", "northwestern", "johns hopkins", "university of london",
-                      "university of toronto", "anu", "university of melbourne"];
+        // Adjusted benchmark based on experience
+        const adjustedMin = positionBenchmark.min * expMultiplier;
+        const adjustedAvg = positionBenchmark.avg * expMultiplier;
+        const adjustedMax = positionBenchmark.max * expMultiplier;
         
-        const lowerName = universityName.toLowerCase();
-        
-        if (tier1.some(uni => lowerName.includes(uni))) return 10;
-        if (tier2.some(uni => lowerName.includes(uni))) return 5;
-        return 0;
-    }
-
-    // Main scoring function
-    function calculateScore() {
-        let score = 0;
-        
-        // 1. Qualifications (35%)
-        if (txt('ug')) score += 5;
-        if (txt('pg')) score += 10;
-        if (txt('phd')) score += 20;  // Reduced from 25 to prevent overweighting
-        if (txt('postdoc')) score += 10;  // Reduced from 15
-        if (txt('other')) score += 5;
-        
-        // 2. Research Output (30%)
-        const pubScore = Math.min(num('pub0') * 4 + num('pub1') * 3 + num('pub2') * 2, 30);  // Reduced weights
-        score += pubScore;
-        score += Math.min(num('patents') * 3, 15);  // Reduced from 5 to 3
-        score += Math.min(num('projects') * 2, 10);  // Reduced from 3 to 2
-        score += Math.min(Math.floor(num('consult') / 100000), 5);  // Reduced from 10 to 5
-        
-        // Add scoring for new research metrics
-        score += Math.min(num('scopus-wos') * 2, 20);  // Reduced from 3 to 2
-        score += Math.min(num('ugc') * 1, 10);  // Reduced from 2 to 1
-        score += Math.min(num('abdc') * 2, 15);  // Reduced from 4 to 2
-        score += Math.min(num('books') * 3, 10);  // Reduced from 5 to 3
-        score += Math.min(num('national-conf'), 5);
-        score += Math.min(num('international-conf'), 10);
-        
-        // 3. Teaching Experience (25%)
-        score += Math.min(num('exp') * 2, 20);  // Reduced from 3 to 2
-        score += Math.min(num('courses-taught'), 5);
-        score += Math.min(num('teaching-awards') * 3, 10);
-        score += Math.min(num('student-mentoring') / 5, 5);
-        
-        // Add scoring for new teaching metrics
-        score += Math.min(num('national-teaching-exp') * 2, 10);
-        score += Math.min(num('international-teaching-exp') * 3, 15);
-        score += Math.min(num('industry-exp') * 2, 10);
-        score += Math.min(num('mooc-courses') * 3, 10);
-        score += Math.min(num('podcasts'), 5);
-        score += Math.min(num('vr-projects') * 5, 10);
-        score += Math.min(num('educational-blogs'), 5);
-        
-        // 4. University Prestige (5%)
-        score += evaluateUniversity(txt('current-university'));
-        
-        // 5. Salary Evaluation (5%)
-        score += evaluateSalary(
-            num('current-salary'), 
-            num('expected-salary'), 
-            txt('post'), 
-            num('exp')
-        ) / 2;  // Reduced weight
-        
-        // Cap at 100
-        return Math.min(100, Math.round(score));
-    }
-
-    // Store data for final evaluation
-    let candidateData = null;
-
-    // Event listeners
-    document.getElementById('btn-initial').addEventListener('click', function() {
-        // Basic validation
-        if (!txt('specialization')) {
-            alert('Please enter specialization/area of expertise');
-            return;
-        }
-        if (!txt('program-teaching')) {
-            alert('Please enter program(s) teaching');
-            return;
-        }
-        if (!txt('post')) {
-            showError('err-post', true);
-            return;
-        }
-        const age = num('age');
-        if (age < 21 || age > 100) {
-            showError('err-age', true);
-            return;
-        }
-        const exp = num('exp');
-        if (exp < 0) {
-            alert('Experience cannot be negative');
-            return;
-        }
-        if (!txt('ug')) {
-            showError('err-ug', true);
-            return;
-        }
-        
-        // Calculate score
-        const score = calculateScore();
-        const grade = classify(score);
-        
-        // Store data for final evaluation
-        candidateData = {
-            score: score,
-            grade: grade
-        };
-        
-        // Generate recommendation
-        let recommendation = `INITIAL EVALUATION: GRADE ${grade}\n\n`;
-        
-        if (grade === 'A') {
-            recommendation += "STRONGLY RECOMMENDED\n\n";
-            recommendation += "Candidate demonstrates exceptional qualifications with strong research output, teaching experience, and appropriate salary expectations. Recommend proceeding to interview stage.";
-        } else if (grade === 'B') {
-            recommendation += "MODERATELY RECOMMENDED\n\n";
-            recommendation += "Candidate shows good potential with adequate qualifications. Some areas may need further development. Consider for interview if other candidates are limited.";
+        // Evaluate expected salary
+        if (expected < adjustedMin) {
+            return { score: 10, note: "Expected salary is below market standard for this position and experience level." };
+        } else if (expected <= adjustedAvg) {
+            return { score: 8, note: "Expected salary is reasonable and within market range." };
+        } else if (expected <= adjustedMax) {
+            return { score: 6, note: "Expected salary is above average but still within acceptable range." };
         } else {
-            recommendation += "NOT RECOMMENDED\n\n";
-            recommendation += "Candidate does not meet minimum requirements for this position. Significant gaps in qualifications, experience, or unrealistic salary expectations.";
+            return { score: 4, note: "Expected salary is significantly above market standards for this position." };
+        }
+    }
+
+    // Calculate initial score based on qualifications and experience
+    function calculateInitialScore() {
+        // Validate required fields
+        if (!txt('faculty-name') || !txt('specialization') || !txt('program-teaching') || 
+            !txt('post') || !num('age') || !num('exp') || !num('expected-salary') || !txt('ug')) {
+            alert("Please fill in all required fields marked with *");
+            return;
+        }
+
+        let score = 0;
+        let maxScore = 100;
+        let details = "";
+
+        // 1. Educational Qualifications (25 points)
+        let educationScore = 0;
+        let educationDetails = "\nEDUCATIONAL QUALIFICATIONS:\n";
+        
+        // UG degree (5 points)
+        if (txt('ug')) {
+            educationScore += 5;
+            educationDetails += "âœ“ UG Degree: +5 points\n";
+        }
+        
+        // PG degree (5 points)
+        if (txt('pg')) {
+            educationScore += 5;
+            educationDetails += "âœ“ PG Degree: +5 points\n";
+        }
+        
+        // PhD (10 points)
+        if (txt('phd')) {
+            educationScore += 10;
+            educationDetails += "âœ“ PhD: +10 points\n";
+            
+            // PhD status (up to 5 points)
+            const phdStatus = txt('phd-status');
+            if (phdStatus === "Completed") {
+                educationScore += 5;
+                educationDetails += "âœ“ PhD Completed: +5 points\n";
+            } else if (phdStatus === "Thesis Submitted") {
+                educationScore += 4;
+                educationDetails += "âœ“ PhD Thesis Submitted: +4 points\n";
+            } else if (phdStatus) {
+                educationScore += 2;
+                educationDetails += `âœ“ PhD ${phdStatus}: +2 points\n`;
+            }
+        }
+        
+        // UGC NET qualification (5 points)
+        if (txt('ugc-net') === "Yes") {
+            educationScore += 5;
+            educationDetails += "âœ“ UGC NET Qualified: +5 points\n";
+        }
+        
+        score += educationScore;
+        details += educationDetails + `Total Education Score: ${educationScore}/25\n`;
+
+        // 2. Experience (25 points)
+        let experienceScore = 0;
+        let experienceDetails = "\nEXPERIENCE:\n";
+        
+        const totalExp = num('exp');
+        const nationalTeachingExp = num('national-teaching-exp');
+        const internationalTeachingExp = num('international-teaching-exp');
+        const industryExp = num('industry-exp');
+        
+        // Teaching experience (up to 15 points)
+        const teachingExp = Math.min(nationalTeachingExp + internationalTeachingExp, 15);
+        experienceScore += teachingExp;
+        experienceDetails += `âœ“ Teaching Experience (${teachingExp} years): +${teachingExp} points\n`;
+        
+        // International experience bonus (up to 5 points)
+        const intlBonus = Math.min(internationalTeachingExp, 5);
+        if (intlBonus > 0) {
+            experienceScore += intlBonus;
+            experienceDetails += `âœ“ International Teaching Experience: +${intlBonus} points\n`;
+        }
+        
+        // Industry experience (up to 5 points)
+        const industryBonus = Math.min(industryExp, 5);
+        if (industryBonus > 0) {
+            experienceScore += industryBonus;
+            experienceDetails += `âœ“ Industry Experience: +${industryBonus} points\n`;
+        }
+        
+        // Cap at 25 points
+        experienceScore = Math.min(experienceScore, 25);
+        score += experienceScore;
+        details += experienceDetails + `Total Experience Score: ${experienceScore}/25\n`;
+
+        // 3. Research Output (25 points)
+        let researchScore = 0;
+        let researchDetails = "\nRESEARCH OUTPUT:\n";
+        
+        // Recent publications (up to 10 points)
+        const pub0 = num('pub0');
+        const pub1 = num('pub1');
+        const pub2 = num('pub2');
+        const totalRecentPubs = pub0 + pub1 + pub2;
+        const pubPoints = Math.min(totalRecentPubs, 10);
+        researchScore += pubPoints;
+        researchDetails += `âœ“ Recent Publications (${totalRecentPubs}): +${pubPoints} points\n`;
+        
+        // Quality publications (up to 10 points)
+        const scopusWos = num('scopus-wos');
+        const ugc = num('ugc');
+        const abdc = num('abdc');
+        const qualityPubs = scopusWos * 2 + ugc * 1.5 + abdc * 1.2;
+        const qualityPoints = Math.min(qualityPubs, 10);
+        researchScore += qualityPoints;
+        researchDetails += `âœ“ Quality Publications: +${qualityPoints.toFixed(1)} points\n`;
+        
+        // Books and patents (up to 5 points)
+        const books = num('books');
+        const patents = num('patents');
+        const booksPatentsPoints = Math.min(books * 2 + patents * 1.5, 5);
+        researchScore += booksPatentsPoints;
+        researchDetails += `âœ“ Books & Patents: +${booksPatentsPoints.toFixed(1)} points\n`;
+        
+        score += researchScore;
+        details += researchDetails + `Total Research Score: ${researchScore}/25\n`;
+
+        // 4. Salary Expectation (15 points)
+        const currentSalary = num('current-salary');
+        const expectedSalary = num('expected-salary');
+        const position = txt('post');
+        const salaryEvaluation = evaluateSalary(currentSalary, expectedSalary, position, totalExp);
+        score += salaryEvaluation.score;
+        details += `\nSALARY EVALUATION:\n${salaryEvaluation.note}\nSalary Score: ${salaryEvaluation.score}/15\n`;
+
+        // 5. Additional Factors (10 points)
+        let additionalScore = 0;
+        let additionalDetails = "\nADDITIONAL FACTORS:\n";
+        
+        // Digital teaching portfolio (up to 3 points)
+        const moocCourses = num('mooc-courses');
+        const podcasts = num('podcasts');
+        const vrProjects = num('vr-projects');
+        const educationalBlogs = num('educational-blogs');
+        const digitalPortfolio = Math.min(moocCourses * 0.5 + podcasts * 0.2 + vrProjects * 1 + educationalBlogs * 0.3, 3);
+        if (digitalPortfolio > 0) {
+            additionalScore += digitalPortfolio;
+            additionalDetails += `âœ“ Digital Teaching Portfolio: +${digitalPortfolio.toFixed(1)} points\n`;
+        }
+        
+        // Academic administration (up to 4 points)
+        const adminRoles = txt('admin-roles');
+        const curriculumDev = txt('curriculum-dev');
+        let adminScore = 0;
+        
+        // Check accreditation experience
+        const nep = document.getElementById('nep').checked;
+        const naac = document.getElementById('naac').checked;
+        const nba = document.getElementById('nba').checked;
+        
+        if (nep) adminScore += 1;
+        if (naac) adminScore += 1.5;
+        if (nba) adminScore += 1.5;
+        
+        // Admin roles and curriculum development
+        if (adminRoles) adminScore += 1;
+        if (curriculumDev) adminScore += 1;
+        
+        adminScore = Math.min(adminScore, 4);
+        if (adminScore > 0) {
+            additionalScore += adminScore;
+            additionalDetails += `âœ“ Academic Administration: +${adminScore.toFixed(1)} points\n`;
+        }
+        
+        // Extra-curricular activities (up to 3 points)
+        const extraCurricular = txt('extra-curricular');
+        const communityService = txt('community-service');
+        let extraScore = 0;
+        
+        if (extraCurricular) extraScore += 1.5;
+        if (communityService) extraScore += 1.5;
+        
+        extraScore = Math.min(extraScore, 3);
+        if (extraScore > 0) {
+            additionalScore += extraScore;
+            additionalDetails += `âœ“ Extra-Curricular Activities: +${extraScore.toFixed(1)} points\n`;
+        }
+        
+        score += additionalScore;
+        details += additionalDetails + `Total Additional Score: ${additionalScore}/10\n`;
+
+        // Final score and classification
+        const finalScore = Math.min(Math.round(score), 100);
+        const grade = classify(finalScore);
+        
+        details += `\nFINAL SCORE: ${finalScore}/100 (Grade ${grade})\n\n`;
+        
+        // Add recommendation based on score
+        if (grade === "A") {
+            details += "RECOMMENDATION: Highly Recommended - Candidate exceeds expectations in multiple areas.";
+        } else if (grade === "B") {
+            details += "RECOMMENDATION: Recommended - Candidate meets requirements and shows potential.";
+        } else {
+            details += "RECOMMENDATION: Not Recommended - Candidate does not meet minimum requirements.";
         }
         
         // Display result
         const resultEl = document.getElementById('initial');
-        resultEl.textContent = recommendation;
-        resultEl.className = 'result ' + grade;
+        resultEl.textContent = details;
+        resultEl.className = `result ${grade}`;
         resultEl.style.display = 'block';
-    });
+        
+        return { score: finalScore, grade: grade };
+    }
 
-    document.getElementById('btn-final').addEventListener('click', function() {
-        if (!candidateData) {
-            alert('Please generate an initial evaluation first');
+    // Calculate final score after interview
+    function calculateFinalScore() {
+        // Validate required fields
+        if (!document.getElementById('demo-video').files.length) {
+            alert("Please upload a demo video");
             return;
         }
         
         const demoRating = num('demo');
         const interviewRating = num('interview');
         
-        if (demoRating < 1 || demoRating > 10) {
-            alert('Please enter a valid demo class rating (1-10)');
+        if (demoRating < 1 || demoRating > 10 || interviewRating < 1 || interviewRating > 10) {
+            alert("Please provide valid ratings (1-10) for both demo and interview");
             return;
         }
         
-        if (interviewRating < 1 || interviewRating > 10) {
-            alert('Please enter a valid interview rating (1-10)');
-            return;
-        }
+        // Get initial score
+        const initialResult = calculateInitialScore();
+        if (!initialResult) return;
         
-        // Calculate final score (70% initial, 30% interview/demo)
-        const interviewScore = (demoRating + interviewRating) / 2 * 10; // Convert to percentage
-        const finalScore = Math.round(candidateData.score * 0.7 + interviewScore * 0.3);
+        // Calculate interview component (30% of total)
+        const interviewScore = (demoRating + interviewRating) / 20 * 30; // Convert to 30-point scale
+        
+        // Calculate final score (70% initial + 30% interview)
+        const finalScore = Math.round(initialResult.score * 0.7 + interviewScore);
         const grade = classify(finalScore);
         
-        let recommendation = `FINAL EVALUATION: GRADE ${grade}\n\n`;
+        let details = `INITIAL SCORE: ${initialResult.score}/100 (Grade ${initialResult.grade})\n`;
+        details += `DEMO CLASS RATING: ${demoRating}/10\n`;
+        details += `INTERVIEW RATING: ${interviewRating}/10\n`;
+        details += `INTERVIEW SCORE: ${Math.round(interviewScore)}/30\n`;
+        details += `FINAL SCORE: ${finalScore}/100 (Grade ${grade})\n\n`;
         
-        if (grade === 'A') {
-            recommendation += "HIRE RECOMMENDATION\n\n";
-            recommendation += "Candidate excelled in both documentation review and interview process. Strongly recommend making an offer.";
-        } else if (grade === 'B') {
-            recommendation += "CONDITIONAL RECOMMENDATION\n\n";
-            recommendation += "Candidate performed adequately. Consider for hire if no stronger candidates available, or with specific development plan.";
+        // Add final recommendation
+        if (grade === "A") {
+            details += "FINAL RECOMMENDATION: STRONGLY RECOMMEND FOR HIRE\n";
+            details += "Candidate demonstrated excellent qualifications and performed exceptionally well in the interview process.";
+        } else if (grade === "B") {
+            details += "FINAL RECOMMENDATION: RECOMMEND FOR HIRE\n";
+            details += "Candidate meets requirements and showed good potential during the interview process.";
         } else {
-            recommendation += "DO NOT HIRE\n\n";
-            recommendation += "Candidate did not meet expectations during the interview process. Do not proceed with offer.";
+            details += "FINAL RECOMMENDATION: DO NOT HIRE\n";
+            details += "Candidate does not meet minimum requirements or performed poorly in the interview process.";
         }
         
-        recommendation += `\nDemo Class Rating: ${demoRating}/10`;
-        recommendation += `\nInterview Rating: ${interviewRating}/10`;
-        
+        // Display result
         const resultEl = document.getElementById('final');
-        resultEl.textContent = recommendation;
-        resultEl.className = 'result ' + grade;
+        resultEl.textContent = details;
+        resultEl.className = `result ${grade}`;
         resultEl.style.display = 'block';
-    });
+    }
 
-    document.getElementById('btn-ai').addEventListener('click', function() {
-        if (!candidateData) {
-            alert('Please generate an initial evaluation first');
-            return;
-        }
+    // Generate AI analysis
+    function generateAIAnalysis() {
+        const initialResult = calculateInitialScore();
+        if (!initialResult) return;
         
-        // This would typically connect to a backend AI service
-        // For demo purposes, we'll generate a simulated analysis
+        // Simulate AI analysis with more detailed insights
+        let analysis = "AI-POWERED ANALYSIS:\n\n";
         
-        const analysis = `AI-POWERED CANDIDATE ANALYSIS\n\n
-STRENGTHS:
-- Strong research background with consistent publication record
-- Diverse teaching experience across multiple platforms
-- Industry experience adds practical knowledge to teaching
-
-AREAS FOR DEVELOPMENT:
-- Limited international conference participation
-- Could benefit from more interdisciplinary research
-- Consider developing more online course materials
-
-RECOMMENDATIONS:
-1. Consider for senior lecturer position with research expectations
-2. Pair with experienced mentor for first year
-3. Recommend attendance at international conference within first year
-4. Consider offering 5% below requested salary with performance bonuses`;
-
+        analysis += "STRENGTHS:\n";
+        analysis += "â€¢ Strong educational background with relevant qualifications\n";
+        analysis += "â€¢ Good research output with quality publications\n";
+        analysis += "â€¢ Reasonable salary expectations aligned with market standards\n\n";
+        
+        analysis += "AREAS FOR DEVELOPMENT:\n";
+        analysis += "â€¢ Consider more international collaborations for research\n";
+        analysis += "â€¢ Develop more interdisciplinary teaching capabilities\n";
+        analysis += "â€¢ Expand digital teaching portfolio with online courses\n\n";
+        
+        analysis += "RECOMMENDATIONS:\n";
+        analysis += "1. Offer position with mentorship program for first year\n";
+        analysis += "2. Include research grant for initial projects\n";
+        analysis += "3. Provide opportunities for professional development\n";
+        analysis += "4. Consider for leadership roles in curriculum development\n";
+        
+        // Display result
         const resultEl = document.getElementById('ai-analysis');
         resultEl.textContent = analysis;
-        resultEl.className = 'result B';
+        resultEl.className = `result ${initialResult.grade}`;
         resultEl.style.display = 'block';
+    }
+
+    // Event listeners
+    document.getElementById('btn-initial').addEventListener('click', calculateInitialScore);
+    document.getElementById('btn-final').addEventListener('click', calculateFinalScore);
+    document.getElementById('btn-ai').addEventListener('click', generateAIAnalysis);
+    document.getElementById('btn-clear').addEventListener('click', clearForm);
+
+    // Initialize form validation
+    document.getElementById('age').addEventListener('blur', function() {
+        const age = num('age');
+        showError('err-age', age < 21 || age > 100);
     });
 
-    document.getElementById('btn-clear').addEventListener('click', function() {
-        clearForm();
-        candidateData = null;
+    document.getElementById('post').addEventListener('change', function() {
+        showError('err-post', !txt('post'));
     });
 
-    // Initialize any dynamic fields
-    document.addEventListener('DOMContentLoaded', function() {
-        // Any initialization code would go here
+    document.getElementById('ug').addEventListener('blur', function() {
+        showError('err-ug', !txt('ug'));
     });
-</script>
+    </script>
 </body>
 </html>
-
-
-
-
