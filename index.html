@@ -594,7 +594,29 @@
                     <div class="section-title">Teaching Experience</div>
                 </div>
 
+                
+<div class="col-4">
+                    <div class="form-group">
+                        <label for="national-teaching-exp">National Teaching Experience (Years)</label>
+                        <input type="number" id="national-teaching-exp" min="0" placeholder="e.g., 5">
+                    </div>
+                </div>
+
                 <div class="col-4">
+                    <div class="form-group">
+                        <label for="international-teaching-exp">International Teaching Experience (Years)</label>
+                        <input type="number" id="international-teaching-exp" min="0" placeholder="e.g., 2">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="industry-exp">Industry Experience (Years)</label>
+                        <input type="number" id="industry-exp" min="0" placeholder="e.g., 3">
+                    </div>
+                </div>
+
+				<div class="col-4">
                    <div class="form-group">
                        <label for="courses-taught">Online Courses Taught</label>
                        <input type="number" id="courses-taught" min="0" placeholder="e.g., 5">
@@ -616,26 +638,7 @@
                 </div>
 
                 <!-- NEW: Additional Teaching Experience Fields -->
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="national-teaching-exp">National Teaching Experience (Years)</label>
-                        <input type="number" id="national-teaching-exp" min="0" placeholder="e.g., 5">
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="international-teaching-exp">International Teaching Experience (Years)</label>
-                        <input type="number" id="international-teaching-exp" min="0" placeholder="e.g., 2">
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="industry-exp">Industry Experience (Years)</label>
-                        <input type="number" id="industry-exp" min="0" placeholder="e.g., 3">
-                    </div>
-                </div>
+                
 
                 <!-- NEW: Digital Teaching Portfolio -->
                 <div class="col-12">
@@ -648,7 +651,7 @@
                         <input type="number" id="mooc-courses" min="0" placeholder="e.g., 2" onchange="toggleUploadField('mooc-courses', 'mooc-upload')">
                     </div>
                     <div id="mooc-upload" class="upload-container">
-                        <label>Upload MOOC Certificates</label>
+                        <label>Upload MOOC Document</label>
                         <input type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
                     </div>
                 </div>
@@ -883,7 +886,7 @@
 
     // Realistic salary evaluation
     function evaluateSalary(current, expected, position, experience) {
-        // Position-based salary benchmarks (monthly in ₹)
+        // Position-based salary benchmarks (monthly in â‚¹)
         const benchmarks = {
             "Assistant Professor": { min: 60000, avg: 85000, max: 120000 },
             "Associate Professor": { min: 90000, avg: 120000, max: 180000 },
