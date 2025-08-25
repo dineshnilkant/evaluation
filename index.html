@@ -179,6 +179,12 @@
             border-left: 4px solid #ef4444;
         }
 
+        .D {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+            border-left: 4px solid #a855f7;
+        }
+
         .section-title {
             color: var(--muted);
             font-size: 0.875rem;
@@ -263,6 +269,37 @@
             margin-right: 0.5rem;
         }
 
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .info-list {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .level-description {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .level-description h4 {
+            margin-bottom: 0.5rem;
+            color: var(--muted);
+        }
+
         @media (max-width: 768px) {
             .col-6, .col-4, .col-3 {
                 grid-column: span 12;
@@ -298,9 +335,33 @@
     <div class="container">
         <header>
             <h1>Faculty Recruitment Evaluator for Colleges, Business School and Universities</h1>
+            
         </header>
 
+        <div class="info-box">
+            <h3>Dear Friends</h3>
+            <p>This faculty recruitment evaluation process is divided into two levels: Evaluation A and Evaluation B.</p>
+            <ul class="info-list">
+                <li><strong>Evaluation A</strong> is self-explanatory and assesses qualifications, experience, and research output.</li>
+                <li><strong>Evaluation B</strong> requires a demonstration of your teaching abilities through video submission.</li>
+            </ul>
+            <p>This process will help us assess your current level, based on which salaries and job opportunities will be suggested.</p>
+            
+            <div class="level-description">
+                <h4>Levels of Evaluation:</h4>
+                <ul>
+                    <li><strong>Level A:</strong> Very Good</li>
+                    <li><strong>Level B:</strong> Good</li>
+                    <li><strong>Level C:</strong> Average</li>
+                    <li><strong>Level D:</strong> Not Satisfactory</li>
+                </ul>
+                <p>Candidates are judged according to this rubric. Please note, this information is for our internal reference to understand the quality of the candidate. However, there will always be an opportunity to upgrade your level internally.</p>
+            </div>
+        </div>
+
+        <!-- Evaluation A Section -->
         <div class="card">
+            <h2>Evaluation A:</h2>
             <div class="grid">
                 <!-- Personal Information -->
                 <div class="col-6">
@@ -318,8 +379,7 @@
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
-                            <option>Prefer not to say</option>
-                        </select>
+                                                    </select>
                     </div>
                 </div>
 
@@ -754,6 +814,14 @@
                                 <input type="checkbox" id="nba" value="NBA">
                                 <label for="nba">NBA Accreditation</label>
                             </div>
+				<div class="checkbox-item">
+                                <input type="checkbox" id="IQAC" value="IQAC">
+                                <label for="nba">IQAC</label>
+                            </div>
+<div class="checkbox-item">
+                                <input type="checkbox" id="Others" value="Others">
+                                <label for="nba">Others</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -813,7 +881,7 @@
                 <!-- Evaluation Buttons -->
                 <div class="col-12">
                     <button class="btn" id="btn-initial">
-                        Generate Recommendation
+                        Generate Evaluation A Result
                     </button>
                     <button class="btn btn-clear" id="btn-clear">
                         Clear Form
@@ -823,35 +891,27 @@
             </div>
         </div>
 
-        <!-- Interview Evaluation Section -->
+        <!-- Evaluation B Section -->
         <div class="card">
-            <h2>Interview Evaluation</h2>
+            <h2>Evaluation B: Teaching Demonstration</h2>
+            <div class="info-box">
+                <h3>Evaluation B Process</h3>
+                <p>Evaluation B will be conducted by Appoint Teachers. You will be informed of your demo class rating and your final level. Along with this, you will also have access to a general and detailed analysis of your performance.</p>
+                <p>The current level has been created based on your submitted data. However, the final level will only be shared after Evaluation B. To receive the final level, it is mandatory to upload your demo video, where your name and face must be clearly visible.</p>
+            </div>
+            
             <div class="grid">
                 <div class="col-12">
                     <div class="form-group file-upload">
                         <label for="demo-video">Upload 5-Minute Demo Video*</label>
                         <input type="file" id="demo-video" accept=".mp4,.mov,.avi" required>
-                        <div class="note">Maximum file size: 100MB</div>
+                        <div class="note">Maximum file size: 100MB. Your name and face must be clearly visible in the video.</div>
                     </div>
                 </div>
                 
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="demo">Demo Class Rating (1-10)</label>
-                        <input type="number" id="demo" min="1" max="10" placeholder="e.g., 8">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="interview">Interview Rating (1-10)</label>
-                        <input type="number" id="interview" min="1" max="10" placeholder="e.g., 7">
-                    </div>
-                </div>
-
                 <div class="col-12">
                     <button class="btn" id="btn-final">
-                        Calculate Final Recommendation
+                        Submit Evaluation B
                     </button>
                     <div id="final" class="result"></div>
                 </div>
@@ -872,9 +932,8 @@
         </div>
     </div>
 
-   
-    <script>
-    // Previous helper functions remain the same
+           <script>
+    // Helper functions
     const num = (id) => {
         const v = parseFloat(document.getElementById(id).value);
         return Number.isFinite(v) ? v : 0;
@@ -889,8 +948,9 @@
 
     function classify(score) {
         if (score >= 80) return "A";
-        if (score >= 50) return "B";
-        return "C";
+        if (score >= 60) return "B";
+        if (score >= 40) return "C";
+        return "D";
     }
 
     // Toggle upload fields based on input value
@@ -932,408 +992,272 @@
             const div = document.createElement('div');
             div.className = 'publication-link';
             div.innerHTML = `
-                <label for="pub-link-${i}">Publication ${i + 1} Link</label>
-                <input type="url" id="pub-link-${i}" placeholder="https://example.com/publication">
+                <label for="pub-link-${i}">Publication ${i + 1} URL</label>
+                <input type="url" id="pub-link-${i}" placeholder="https://...">
             `;
             container.appendChild(div);
         }
     }
 
-    // Fixed clear form function
-    function clearForm() {
-        // Get all form elements
-        const formElements = document.querySelectorAll('input:not([type="button"]):not([type="submit"]), select, textarea');
+    // Calculate Evaluation A score
+    function calculateEvaluationA() {
+        // Basic validation
+        if (!txt('faculty-name')) {
+            alert('Please enter faculty name');
+            return null;
+        }
         
-        // Clear all fields
-        formElements.forEach(element => {
-            if (element.type === 'file') {
-                // Create a new file input to reset it
-                const newInput = document.createElement('input');
-                newInput.type = 'file';
-                newInput.id = element.id;
-                newInput.name = element.name;
-                newInput.className = element.className;
-                newInput.accept = element.accept;
-                if (element.required) newInput.required = true;
-                element.parentNode.replaceChild(newInput, element);
-            } else if (element.type === 'number') {
-                element.value = '';
-            } else if (element.type === 'checkbox') {
-                element.checked = false;
-            } else {
-                element.value = '';
-            }
-        });
-        
-        // Reset dynamic fields
-        document.getElementById('subjects-container').innerHTML = '';
-        document.getElementById('publication-links').innerHTML = '';
-        
-        // Reset counters
-        document.getElementById('num-subjects').value = '';
-        document.getElementById('num-publications').value = '';
-        
-        // Hide upload containers
-        document.querySelectorAll('.upload-container').forEach(container => {
-            container.style.display = 'none';
-        });
-        
-        // Hide all result displays
-        document.querySelectorAll('.result').forEach(el => {
-            el.style.display = 'none';
-        });
-        
-        // Hide all errors
-        document.querySelectorAll('.error').forEach(el => {
-            el.style.display = 'none';
-        });
-    }
-
-    // Realistic salary evaluation
-    function evaluateSalary(current, expected, position, experience) {
-        // Position-based salary benchmarks (monthly in â‚¹)
-        const benchmarks = {
-            "Assistant Professor": { min: 60000, avg: 85000, max: 120000 },
-            "Associate Professor": { min: 90000, avg: 120000, max: 180000 },
-            "Professor": { min: 120000, avg: 160000, max: 250000 },
-            "Professor of Practice": { min: 100000, avg: 150000, max: 300000 },
-            "Visiting Faculty": { min: 80000, avg: 120000, max: 200000 }
-        };
-
-        const positionBenchmark = benchmarks[position] || benchmarks["Assistant Professor"];
-        
-        // Experience multiplier (1% increase per year of experience)
-        const expMultiplier = 1 + (experience * 0.01);
-        
-        // Adjusted benchmark based on experience
-        const adjustedMin = positionBenchmark.min * expMultiplier;
-        const adjustedAvg = positionBenchmark.avg * expMultiplier;
-        const adjustedMax = positionBenchmark.max * expMultiplier;
-        
-        // Evaluate expected salary
-        if (expected < adjustedMin) {
-            return { score: 10, note: "Expected salary is below market standard for this position and experience level." };
-        } else if (expected <= adjustedAvg) {
-            return { score: 8, note: "Expected salary is reasonable and within market range." };
-        } else if (expected <= adjustedMax) {
-            return { score: 6, note: "Expected salary is above average but still within acceptable range." };
+        if (!txt('post')) {
+            showError('err-post', true);
+            return null;
         } else {
-            return { score: 4, note: "Expected salary is significantly above market standards for this position." };
+            showError('err-post', false);
         }
-    }
-
-    // Calculate initial score based on qualifications and experience
-    function calculateInitialScore() {
-        // Validate required fields
-        if (!txt('faculty-name') || !txt('specialization') || !txt('program-teaching') || 
-            !txt('post') || !num('age') || !num('exp') || !num('expected-salary') || !txt('ug')) {
-            alert("Please fill in all required fields marked with *");
-            return;
+        
+        const age = num('age');
+        if (age < 21 || age > 100) {
+            showError('err-age', true);
+            return null;
+        } else {
+            showError('err-age', false);
+        }
+        
+        if (!txt('ug')) {
+            showError('err-ug', true);
+            return null;
+        } else {
+            showError('err-ug', false);
         }
 
+        // Calculate score based on various factors
         let score = 0;
-        let maxScore = 100;
-        let details = "";
-
-        // 1. Educational Qualifications (25 points)
-        let educationScore = 0;
-        let educationDetails = "\nEDUCATIONAL QUALIFICATIONS:\n";
         
-        // UG degree (5 points)
-        if (txt('ug')) {
-            educationScore += 5;
-            educationDetails += "âœ“ UG Degree: +5 points\n";
-        }
+        // Age factor (prefer 30-50)
+        if (age >= 30 && age <= 50) score += 10;
+        else if (age >= 25 && age < 30) score += 7;
+        else if (age > 50 && age <= 60) score += 5;
+        else score += 3;
         
-        // PG degree (5 points)
-        if (txt('pg')) {
-            educationScore += 5;
-            educationDetails += "âœ“ PG Degree: +5 points\n";
-        }
+        // Experience factor
+        const exp = num('exp');
+        if (exp >= 10) score += 15;
+        else if (exp >= 5) score += 10;
+        else if (exp >= 3) score += 7;
+        else if (exp > 0) score += 5;
         
-        // PhD (10 points)
-        if (txt('phd')) {
-            educationScore += 10;
-            educationDetails += "âœ“ PhD: +10 points\n";
-            
-            // PhD status (up to 5 points)
-            const phdStatus = txt('phd-status');
-            if (phdStatus === "Completed") {
-                educationScore += 5;
-                educationDetails += "âœ“ PhD Completed: +5 points\n";
-            } else if (phdStatus === "Thesis Submitted") {
-                educationScore += 4;
-                educationDetails += "âœ“ PhD Thesis Submitted: +4 points\n";
-            } else if (phdStatus) {
-                educationScore += 2;
-                educationDetails += `âœ“ PhD ${phdStatus}: +2 points\n`;
-            }
-        }
+        // Educational qualifications
+        if (txt('phd')) score += 20;
+        else if (txt('pg')) score += 10;
         
-        // UGC NET qualification (5 points)
-        if (txt('ugc-net') === "Yes") {
-            educationScore += 5;
-            educationDetails += "âœ“ UGC NET Qualified: +5 points\n";
-        }
+        // UGC NET qualification
+        if (txt('ugc-net') === 'Yes') score += 5;
         
-        score += educationScore;
-        details += educationDetails + `Total Education Score: ${educationScore}/25\n`;
-
-        // 2. Experience (25 points)
-        let experienceScore = 0;
-        let experienceDetails = "\nEXPERIENCE:\n";
-        
-        const totalExp = num('exp');
-        const nationalTeachingExp = num('national-teaching-exp');
-        const internationalTeachingExp = num('international-teaching-exp');
-        const industryExp = num('industry-exp');
-        
-        // Teaching experience (up to 15 points)
-        const teachingExp = Math.min(nationalTeachingExp + internationalTeachingExp, 15);
-        experienceScore += teachingExp;
-        experienceDetails += `âœ“ Teaching Experience (${teachingExp} years): +${teachingExp} points\n`;
-        
-        // International experience bonus (up to 5 points)
-        const intlBonus = Math.min(internationalTeachingExp, 5);
-        if (intlBonus > 0) {
-            experienceScore += intlBonus;
-            experienceDetails += `âœ“ International Teaching Experience: +${intlBonus} points\n`;
-        }
-        
-        // Industry experience (up to 5 points)
-        const industryBonus = Math.min(industryExp, 5);
-        if (industryBonus > 0) {
-            experienceScore += industryBonus;
-            experienceDetails += `âœ“ Industry Experience: +${industryBonus} points\n`;
-        }
-        
-        // Cap at 25 points
-        experienceScore = Math.min(experienceScore, 25);
-        score += experienceScore;
-        details += experienceDetails + `Total Experience Score: ${experienceScore}/25\n`;
-
-        // 3. Research Output (25 points)
-        let researchScore = 0;
-        let researchDetails = "\nRESEARCH OUTPUT:\n";
-        
-        // Recent publications (up to 10 points)
+        // Research publications (last 3 years)
         const pub0 = num('pub0');
         const pub1 = num('pub1');
         const pub2 = num('pub2');
-        const totalRecentPubs = pub0 + pub1 + pub2;
-        const pubPoints = Math.min(totalRecentPubs, 10);
-        researchScore += pubPoints;
-        researchDetails += `âœ“ Recent Publications (${totalRecentPubs}): +${pubPoints} points\n`;
+        const totalPubs = pub0 + pub1 + pub2;
         
-        // Quality publications (up to 10 points)
+        if (totalPubs >= 10) score += 20;
+        else if (totalPubs >= 5) score += 15;
+        else if (totalPubs >= 3) score += 10;
+        else if (totalPubs > 0) score += 5;
+        
+        // Quality publications
         const scopusWos = num('scopus-wos');
         const ugc = num('ugc');
         const abdc = num('abdc');
-        const qualityPubs = scopusWos * 2 + ugc * 1.5 + abdc * 1.2;
-        const qualityPoints = Math.min(qualityPubs, 10);
-        researchScore += qualityPoints;
-        researchDetails += `âœ“ Quality Publications: +${qualityPoints.toFixed(1)} points\n`;
         
-        // Books and patents (up to 5 points)
+        if (scopusWos >= 5) score += 15;
+        else if (scopusWos >= 3) score += 10;
+        else if (scopusWos > 0) score += 5;
+        
+        if (abdc >= 3) score += 10;
+        else if (abdc > 0) score += 5;
+        
+        // Books and patents
         const books = num('books');
         const patents = num('patents');
-        const booksPatentsPoints = Math.min(books * 2 + patents * 1.5, 5);
-        researchScore += booksPatentsPoints;
-        researchDetails += `âœ“ Books & Patents: +${booksPatentsPoints.toFixed(1)} points\n`;
         
-        score += researchScore;
-        details += researchDetails + `Total Research Score: ${researchScore}/25\n`;
-
-        // 4. Salary Expectation (15 points)
-        const currentSalary = num('current-salary');
-        const expectedSalary = num('expected-salary');
-        const position = txt('post');
-        const salaryEvaluation = evaluateSalary(currentSalary, expectedSalary, position, totalExp);
-        score += salaryEvaluation.score;
-        details += `\nSALARY EVALUATION:\n${salaryEvaluation.note}\nSalary Score: ${salaryEvaluation.score}/15\n`;
-
-        // 5. Additional Factors (10 points)
-        let additionalScore = 0;
-        let additionalDetails = "\nADDITIONAL FACTORS:\n";
+        if (books > 0) score += books * 2;
+        if (patents > 0) score += patents * 3;
         
-        // Digital teaching portfolio (up to 3 points)
+        // Teaching experience
+        const nationalTeachingExp = num('national-teaching-exp');
+        const internationalTeachingExp = num('international-teaching-exp');
+        
+        if (internationalTeachingExp > 0) score += internationalTeachingExp * 3;
+        if (nationalTeachingExp > 0) score += nationalTeachingExp * 2;
+        
+        // Industry experience
+        const industryExp = num('industry-exp');
+        if (industryExp > 0) score += industryExp * 2;
+        
+        // Additional factors from new fields
         const moocCourses = num('mooc-courses');
-        const podcasts = num('podcasts');
         const vrProjects = num('vr-projects');
-        const educationalBlogs = num('educational-blogs');
-        const digitalPortfolio = Math.min(moocCourses * 0.5 + podcasts * 0.2 + vrProjects * 1 + educationalBlogs * 0.3, 3);
-        if (digitalPortfolio > 0) {
-            additionalScore += digitalPortfolio;
-            additionalDetails += `âœ“ Digital Teaching Portfolio: +${digitalPortfolio.toFixed(1)} points\n`;
-        }
+        const teachingAwards = num('teaching-awards');
         
-        // Academic administration (up to 4 points)
-        const adminRoles = txt('admin-roles');
-        const curriculumDev = txt('curriculum-dev');
-        let adminScore = 0;
+        if (moocCourses > 0) score += moocCourses * 2;
+        if (vrProjects > 0) score += vrProjects * 3;
+        if (teachingAwards > 0) score += teachingAwards * 4;
         
         // Check accreditation experience
         const nep = document.getElementById('nep').checked;
         const naac = document.getElementById('naac').checked;
         const nba = document.getElementById('nba').checked;
         
-        if (nep) adminScore += 1;
-        if (naac) adminScore += 1.5;
-        if (nba) adminScore += 1.5;
+        if (nep) score += 5;
+        if (naac) score += 7;
+        if (nba) score += 7;
         
-        // Admin roles and curriculum development
-        if (adminRoles) adminScore += 1;
-        if (curriculumDev) adminScore += 1;
+        // Ensure score is within 0-100 range
+        score = Math.min(Math.max(score, 0), 100);
         
-        adminScore = Math.min(adminScore, 4);
-        if (adminScore > 0) {
-            additionalScore += adminScore;
-            additionalDetails += `âœ“ Academic Administration: +${adminScore.toFixed(1)} points\n`;
-        }
-        
-        // Extra-curricular activities (up to 3 points)
-        const extraCurricular = txt('extra-curricular');
-        const communityService = txt('community-service');
-        let extraScore = 0;
-        
-        if (extraCurricular) extraScore += 1.5;
-        if (communityService) extraScore += 1.5;
-        
-        extraScore = Math.min(extraScore, 3);
-        if (extraScore > 0) {
-            additionalScore += extraScore;
-            additionalDetails += `âœ“ Extra-Curricular Activities: +${extraScore.toFixed(1)} points\n`;
-        }
-        
-        score += additionalScore;
-        details += additionalDetails + `Total Additional Score: ${additionalScore}/10\n`;
-
-        // Final score and classification
-        const finalScore = Math.min(Math.round(score), 100);
-        const grade = classify(finalScore);
-        
-        details += `\nFINAL SCORE: ${finalScore}/100 (Grade ${grade})\n\n`;
-        
-        // Add recommendation based on score
-        if (grade === "A") {
-            details += "RECOMMENDATION: Highly Recommended - Candidate exceeds expectations in multiple areas.";
-        } else if (grade === "B") {
-            details += "RECOMMENDATION: Recommended - Candidate meets requirements and shows potential.";
-        } else {
-            details += "RECOMMENDATION: Not Recommended - Candidate does not meet minimum requirements.";
-        }
-        
-        // Display result
-        const resultEl = document.getElementById('initial');
-        resultEl.textContent = details;
-        resultEl.className = `result ${grade}`;
-        resultEl.style.display = 'block';
-        
-        return { score: finalScore, grade: grade };
+        return score;
     }
 
-    // Calculate final score after interview
-    function calculateFinalScore() {
-        // Validate required fields
-        if (!document.getElementById('demo-video').files.length) {
-            alert("Please upload a demo video");
+    // Generate Evaluation A result
+    function generateEvaluationAResult() {
+        const score = calculateEvaluationA();
+        if (score === null) return;
+        
+        const level = classify(score);
+        const name = txt('faculty-name');
+        const position = txt('post');
+        
+        let feedback = "";
+        switch(level) {
+            case "A":
+                feedback = `Excellent candidate! ${name} demonstrates outstanding qualifications with a score of ${score}%. Strongly recommended for ${position} position.`;
+                break;
+            case "B":
+                feedback = `Good candidate. ${name} shows solid qualifications with a score of ${score}%. Recommended for ${position} position with potential for growth.`;
+                break;
+            case "C":
+                feedback = `Average candidate. ${name} meets basic requirements with a score of ${score}%. May require additional training or mentorship for ${position} role.`;
+                break;
+            case "D":
+                feedback = `Candidate ${name} does not meet minimum requirements with a score of ${score}%. Not recommended for ${position} position at this time.`;
+                break;
+        }
+        
+        const resultDiv = document.getElementById('initial');
+        resultDiv.textContent = feedback;
+        resultDiv.className = `result ${level}`;
+        resultDiv.style.display = 'block';
+    }
+
+    // Handle Evaluation B submission
+    function submitEvaluationB() {
+        const videoFile = document.getElementById('demo-video').files[0];
+        if (!videoFile) {
+            alert('Please upload your demo video for Evaluation B');
             return;
         }
         
-        const demoRating = num('demo');
-        const interviewRating = num('interview');
+        // In a real application, you would upload the file to a server
+        // For this demo, we'll simulate processing
         
-        if (demoRating < 1 || demoRating > 10 || interviewRating < 1 || interviewRating > 10) {
-            alert("Please provide valid ratings (1-10) for both demo and interview");
-            return;
-        }
-        
-        // Get initial score
-        const initialResult = calculateInitialScore();
-        if (!initialResult) return;
-        
-        // Calculate interview component (30% of total)
-        const interviewScore = (demoRating + interviewRating) / 20 * 30; // Convert to 30-point scale
-        
-        // Calculate final score (70% initial + 30% interview)
-        const finalScore = Math.round(initialResult.score * 0.7 + interviewScore);
-        const grade = classify(finalScore);
-        
-        let details = `INITIAL SCORE: ${initialResult.score}/100 (Grade ${initialResult.grade})\n`;
-        details += `DEMO CLASS RATING: ${demoRating}/10\n`;
-        details += `INTERVIEW RATING: ${interviewRating}/10\n`;
-        details += `INTERVIEW SCORE: ${Math.round(interviewScore)}/30\n`;
-        details += `FINAL SCORE: ${finalScore}/100 (Grade ${grade})\n\n`;
-        
-        // Add final recommendation
-        if (grade === "A") {
-            details += "FINAL RECOMMENDATION: STRONGLY RECOMMEND FOR HIRE\n";
-            details += "Candidate demonstrated excellent qualifications and performed exceptionally well in the interview process.";
-        } else if (grade === "B") {
-            details += "FINAL RECOMMENDATION: RECOMMEND FOR HIRE\n";
-            details += "Candidate meets requirements and showed good potential during the interview process.";
-        } else {
-            details += "FINAL RECOMMENDATION: DO NOT HIRE\n";
-            details += "Candidate does not meet minimum requirements or performed poorly in the interview process.";
-        }
-        
-        // Display result
-        const resultEl = document.getElementById('final');
-        resultEl.textContent = details;
-        resultEl.className = `result ${grade}`;
-        resultEl.style.display = 'block';
+        const resultDiv = document.getElementById('final');
+        resultDiv.innerHTML = `
+            Thank you for submitting your demo video. 
+            Our team will evaluate your teaching demonstration and provide feedback shortly.
+            You will receive an email with your final evaluation level once the review is complete.
+        `;
+        resultDiv.className = 'result B';
+        resultDiv.style.display = 'block';
     }
 
     // Generate AI analysis
     function generateAIAnalysis() {
-        const initialResult = calculateInitialScore();
-        if (!initialResult) return;
+        const score = calculateEvaluationA();
+        if (score === null) return;
         
-        // Simulate AI analysis with more detailed insights
-        let analysis = "AI-POWERED ANALYSIS:\n\n";
+        const level = classify(score);
+        const name = txt('faculty-name');
+        const position = txt('post');
+        const specialization = txt('specialization');
         
-        analysis += "STRENGTHS:\n";
-        analysis += "â€¢ Strong educational background with relevant qualifications\n";
-        analysis += "â€¢ Good research output with quality publications\n";
-        analysis += "â€¢ Reasonable salary expectations aligned with market standards\n\n";
+        // Generate detailed analysis based on the inputs
+        let analysis = `AI ANALYSIS FOR: ${name}\n`;
+        analysis += `========================================\n`;
+        analysis += `Position: ${position}\n`;
+        analysis += `Specialization: ${specialization}\n`;
+        analysis += `Overall Score: ${score}% (Level ${level})\n\n`;
         
-        analysis += "AREAS FOR DEVELOPMENT:\n";
-        analysis += "â€¢ Consider more international collaborations for research\n";
-        analysis += "â€¢ Develop more interdisciplinary teaching capabilities\n";
-        analysis += "â€¢ Expand digital teaching portfolio with online courses\n\n";
+        analysis += `STRENGTHS:\n`;
+        analysis += `- ${num('exp')} years of experience in the field\n`;
+        if (txt('phd')) analysis += `- Doctoral degree in ${txt('phd')}\n`;
+        if (num('scopus-wos') > 0) analysis += `- Strong research output with ${num('scopus-wos')} Scopus/WoS publications\n`;
+        if (num('international-teaching-exp') > 0) analysis += `- Valuable international teaching experience\n`;
         
-        analysis += "RECOMMENDATIONS:\n";
-        analysis += "1. Offer position with mentorship program for first year\n";
-        analysis += "2. Include research grant for initial projects\n";
-        analysis += "3. Provide opportunities for professional development\n";
-        analysis += "4. Consider for leadership roles in curriculum development\n";
+        analysis += `\nAREAS FOR DEVELOPMENT:\n`;
+        if (num('scopus-wos') < 2) analysis += `- Consider increasing high-quality publication output\n`;
+        if (num('international-conf') < 1) analysis += `- Participation in international conferences would be beneficial\n`;
+        if (!txt('phd') && position !== 'Professor of Practice') analysis += `- Pursuing a PhD would strengthen academic profile\n`;
         
-        // Display result
-        const resultEl = document.getElementById('ai-analysis');
-        resultEl.textContent = analysis;
-        resultEl.className = `result ${initialResult.grade}`;
-        resultEl.style.display = 'block';
+        analysis += `\nRECOMMENDATIONS:\n`;
+        if (level === 'A' || level === 'B') {
+            analysis += `- Strong candidate for ${position} position\n`;
+            analysis += `- Consider for leadership roles in ${specialization} department\n`;
+        } else if (level === 'C') {
+            analysis += `- Candidate may benefit from mentorship program\n`;
+            analysis += `- Consider probationary appointment with performance review in 1 year\n`;
+        } else {
+            analysis += `- Candidate does not currently meet requirements for ${position}\n`;
+            analysis += `- Suggest considering for junior role or revisiting after gaining more experience\n`;
+        }
+        
+        const resultDiv = document.getElementById('ai-analysis');
+        resultDiv.textContent = analysis;
+        resultDiv.className = `result ${level}`;
+        resultDiv.style.display = 'block';
     }
 
-    // Event listeners
-    document.getElementById('btn-initial').addEventListener('click', calculateInitialScore);
-    document.getElementById('btn-final').addEventListener('click', calculateFinalScore);
-    document.getElementById('btn-ai').addEventListener('click', generateAIAnalysis);
-    document.getElementById('btn-clear').addEventListener('click', clearForm);
+    // Clear form function
+    function clearForm() {
+        if (confirm('Are you sure you want to clear all form data?')) {
+            const form = document.querySelector('form');
+            if (form) form.reset();
+            
+            // Hide all result displays
+            document.querySelectorAll('.result').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Hide all upload containers
+            document.querySelectorAll('.upload-container').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Clear generated fields
+            document.getElementById('subjects-container').innerHTML = '';
+            document.getElementById('publication-links').innerHTML = '';
+        }
+    }
 
-    // Initialize form validation
-    document.getElementById('age').addEventListener('blur', function() {
-        const age = num('age');
-        showError('err-age', age < 21 || age > 100);
+    // Set up event listeners when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('btn-initial').addEventListener('click', generateEvaluationAResult);
+        document.getElementById('btn-final').addEventListener('click', submitEvaluationB);
+        document.getElementById('btn-ai').addEventListener('click', generateAIAnalysis);
+        document.getElementById('btn-clear').addEventListener('click', clearForm);
+        
+        // Set up event listeners for toggle fields
+        document.getElementById('mooc-courses').addEventListener('change', function() {
+            toggleUploadField('mooc-courses', 'mooc-upload');
+        });
+        document.getElementById('podcasts').addEventListener('change', function() {
+            toggleUploadField('podcasts', 'podcast-upload');
+        });
+        document.getElementById('vr-projects').addEventListener('change', function() {
+            toggleUploadField('vr-projects', 'vr-upload');
+        });
+        document.getElementById('educational-blogs').addEventListener('change', function() {
+            toggleUploadField('educational-blogs', 'blog-upload');
+        });
     });
-
-    document.getElementById('post').addEventListener('change', function() {
-        showError('err-post', !txt('post'));
-    });
-
-    document.getElementById('ug').addEventListener('blur', function() {
-        showError('err-ug', !txt('ug'));
-    });
-    </script>
+</script>
 </body>
 </html>
